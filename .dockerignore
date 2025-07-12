@@ -1,0 +1,44 @@
+# Ignorer les fichiers non nécessaires pour Docker
+
+# Target directory
+target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.eclipse/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Docker files (pas besoin dans l'image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Scripts
+start-docker.sh
+*.sh
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Maven wrapper (optionnel, on peut le garder)
+# .mvn/
+# mvnw
+# mvnw.cmd
