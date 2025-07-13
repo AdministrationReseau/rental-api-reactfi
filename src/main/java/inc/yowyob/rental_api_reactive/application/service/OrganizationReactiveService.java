@@ -39,16 +39,6 @@ public class OrganizationReactiveService {
     }
 
     /**
-     * Trouve une organisation par propriétaire
-     */
-    public Mono<OrganizationResponse> findByOwnerId(UUID ownerId) {
-        log.debug("Finding organization by owner ID: {}", ownerId);
-        return organizationRepository.findByOwnerId(ownerId)
-            .map(this::mapToOrganizationResponse)
-            .doOnNext(org -> log.debug("Found organization for owner: {}", org.getName()));
-    }
-
-    /**
      * Trouve les organisations actives
      */
     public Flux<OrganizationResponse> findAllActive() {

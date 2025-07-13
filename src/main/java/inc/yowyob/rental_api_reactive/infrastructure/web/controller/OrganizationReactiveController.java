@@ -28,8 +28,19 @@ public class OrganizationReactiveController {
     @Operation(summary = "Obtenir toutes les organisations", description = "Récupère la liste de toutes les organisations")
     public Mono<ApiResponse<Flux<OrganizationResponse>>> getAllOrganizations() {
         log.info("GET /api/v1/organizations - Getting all organizations");
+
         Flux<OrganizationResponse> organizations = organizationService.findAll();
-        return Mono.just(ApiResponse.success(organizations, "Organisations récupérées avec succès"));
+
+        return Mono.fromCallable(() -> ApiResponse.<Flux<OrganizationResponse>>builder()
+                .success(true)
+                .message("Organisations récupérées avec succès")
+                .data(organizations)
+                .build())
+            .onErrorReturn(ApiResponse.<Flux<OrganizationResponse>>builder()
+                .success(false)
+                .message("Erreur lors de la récupération des organisations")
+                .data(null)
+                .build());
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,27 +48,42 @@ public class OrganizationReactiveController {
     public Mono<ApiResponse<OrganizationResponse>> getOrganizationById(
         @Parameter(description = "ID de l'organisation") @PathVariable UUID id) {
         log.info("GET /api/v1/organizations/{} - Getting organization by ID", id);
-        return organizationService.findById(id)
-            .map(org -> ApiResponse.success(org, "Organisation trouvée"))
-            .defaultIfEmpty(ApiResponse.error("Organisation non trouvée", 404));
-    }
 
-    @GetMapping(value = "/owner/{ownerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Obtenir une organisation par propriétaire", description = "Récupère l'organisation d'un propriétaire")
-    public Mono<ApiResponse<OrganizationResponse>> getOrganizationByOwner(
-        @Parameter(description = "ID du propriétaire") @PathVariable UUID ownerId) {
-        log.info("GET /api/v1/organizations/owner/{} - Getting organization by owner", ownerId);
-        return organizationService.findByOwnerId(ownerId)
-            .map(org -> ApiResponse.success(org, "Organisation du propriétaire trouvée"))
-            .defaultIfEmpty(ApiResponse.error("Organisation non trouvée pour ce propriétaire", 404));
+        return organizationService.findById(id)
+            .map(org -> ApiResponse.<OrganizationResponse>builder()
+                .success(true)
+                .message("Organisation trouvée")
+                .data(org)
+                .build())
+            .switchIfEmpty(Mono.just(ApiResponse.<OrganizationResponse>builder()
+                .success(false)
+                .message("Organisation non trouvée")
+                .data(null)
+                .build()))
+            .onErrorReturn(ApiResponse.<OrganizationResponse>builder()
+                .success(false)
+                .message("Erreur lors de la récupération de l'organisation")
+                .data(null)
+                .build());
     }
 
     @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "Obtenir les organisations actives", description = "Récupère toutes les organisations actives")
     public Mono<ApiResponse<Flux<OrganizationResponse>>> getActiveOrganizations() {
         log.info("GET /api/v1/organizations/active - Getting active organizations");
+
         Flux<OrganizationResponse> organizations = organizationService.findAllActive();
-        return Mono.just(ApiResponse.success(organizations, "Organisations actives récupérées"));
+
+        return Mono.fromCallable(() -> ApiResponse.<Flux<OrganizationResponse>>builder()
+                .success(true)
+                .message("Organisations actives récupérées")
+                .data(organizations)
+                .build())
+            .onErrorReturn(ApiResponse.<Flux<OrganizationResponse>>builder()
+                .success(false)
+                .message("Erreur lors de la récupération des organisations actives")
+                .data(null)
+                .build());
     }
 
     @GetMapping(value = "/exists/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,7 +91,36 @@ public class OrganizationReactiveController {
     public Mono<ApiResponse<Boolean>> checkOrganizationNameExists(
         @Parameter(description = "Nom à vérifier") @PathVariable String name) {
         log.info("GET /api/v1/organizations/exists/{} - Checking if organization name exists", name);
+
         return organizationService.existsByName(name)
-            .map(exists -> ApiResponse.success(exists, exists ? "Nom existe" : "Nom disponible"));
+            .map(exists -> ApiResponse.<Boolean>builder()
+                .success(true)
+                .message(exists ? "Nom existe" : "Nom disponible")
+                .data(exists)
+                .build())
+            .onErrorReturn(ApiResponse.<Boolean>builder()
+                .success(false)
+                .message("Erreur lors de la vérification du nom d'organisation")
+                .data(null)
+                .build());
+    }
+
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Supprimer une organisation", description = "Supprime une organisation par son ID")
+    public Mono<ApiResponse<Void>> deleteOrganization(
+        @Parameter(description = "ID de l'organisation") @PathVariable UUID id) {
+        log.info("DELETE /api/v1/organizations/{} - Deleting organization", id);
+
+        return organizationService.deleteById(id)
+            .then(Mono.just(ApiResponse.<Void>builder()
+                .success(true)
+                .message("Organisation supprimée avec succès")
+                .data(null)
+                .build()))
+            .onErrorReturn(ApiResponse.<Void>builder()
+                .success(false)
+                .message("Erreur lors de la suppression de l'organisation")
+                .data(null)
+                .build());
     }
 }

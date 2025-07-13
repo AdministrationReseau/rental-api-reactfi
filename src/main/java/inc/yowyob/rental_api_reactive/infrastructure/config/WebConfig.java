@@ -8,6 +8,7 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class WebConfig {
@@ -34,13 +35,19 @@ public class WebConfig {
         // Méthodes autorisées
         configuration.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
 
-        // Headers autorisés
-        configuration.setAllowedHeaders(Arrays.asList(allowedHeaders.split(",")));
+        // Headers autorisés - Important pour Swagger
+        if ("*".equals(allowedHeaders)) {
+            configuration.addAllowedHeader("*");
+        } else {
+            configuration.setAllowedHeaders(Arrays.asList(allowedHeaders.split(",")));
+        }
 
-        // Headers exposés
-        configuration.setExposedHeaders(Arrays.asList(
+        // Headers exposés pour les réponses
+        configuration.setExposedHeaders(List.of(
             "Access-Control-Allow-Origin",
-            "Access-Control-Allow-Credentials"
+            "Access-Control-Allow-Credentials",
+            "Content-Type",
+            "Authorization"
         ));
 
         // Permettre les credentials
@@ -50,7 +57,7 @@ public class WebConfig {
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/**", configuration); // Appliquer à tous les chemins
 
         return new CorsWebFilter(source);
     }

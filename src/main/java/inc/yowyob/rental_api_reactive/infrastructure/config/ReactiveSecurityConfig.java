@@ -22,18 +22,7 @@ public class ReactiveSecurityConfig {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeExchange(exchanges -> exchanges
-                // Routes publiques - Authentification
-                .pathMatchers("/api/v1/auth/**").permitAll()
-
-                // Routes publiques - Onboarding
-                .pathMatchers("/api/v1/onboarding/**").permitAll()
-
-                // Routes publiques - Forfaits (consultation uniquement)
-                .pathMatchers("/api/v1/subscription/plans").permitAll()
-                .pathMatchers("/api/v1/subscription/plans/trial").permitAll()
-                .pathMatchers("/api/v1/subscription/plans/with-*").permitAll()
-
-                // Documentation API
+                // Documentation API - IMPORTANT pour Swagger
                 .pathMatchers("/v3/api-docs/**").permitAll()
                 .pathMatchers("/swagger-ui/**").permitAll()
                 .pathMatchers("/swagger-ui.html").permitAll()
@@ -41,16 +30,24 @@ public class ReactiveSecurityConfig {
                 .pathMatchers("/webjars/**").permitAll()
 
                 // Health checks et actuator
-                .pathMatchers("/actuator/health").permitAll()
-                .pathMatchers("/api/v1/health/**").permitAll()
+                .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers("/health").permitAll()
 
-                // Pour la Phase 1, permettre l'accès aux APIs de base
+                // Routes publiques - Authentification
+                .pathMatchers("/api/v1/auth/**").permitAll()
+
+                // Routes publiques - Onboarding
+                .pathMatchers("/api/v1/onboarding/**").permitAll()
+
+                // Routes publiques - Forfaits (consultation uniquement)
+                .pathMatchers("/api/v1/subscription/plans/**").permitAll()
+
+                // Pour la Phase 1&2, permettre l'accès aux APIs de base
                 .pathMatchers("/api/v1/users/**").permitAll()
                 .pathMatchers("/api/v1/organizations/**").permitAll()
 
-                // Toutes les autres routes nécessitent une authentification (Phase 2+)
-                .anyExchange().permitAll() // Temporaire pour Phase 1
+                // Toutes les autres routes nécessitent une authentification (Phase 3+)
+                .anyExchange().permitAll() // Temporaire pour développement
             )
             .build();
     }

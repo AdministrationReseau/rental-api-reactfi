@@ -28,7 +28,12 @@ public class GlobalReactiveExceptionHandler {
             .map(error -> error.getField() + ": " + error.getDefaultMessage())
             .collect(Collectors.joining(", "));
 
-        ApiResponse<Object> response = ApiResponse.error("Erreurs de validation: " + errors, 400);
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message("Erreurs de validation: " + errors)
+            .data(null)
+            .build();
+
         return Mono.just(ResponseEntity.badRequest().body(response));
     }
 
@@ -42,7 +47,12 @@ public class GlobalReactiveExceptionHandler {
             .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
             .collect(Collectors.joining(", "));
 
-        ApiResponse<Object> response = ApiResponse.error("Violations de contraintes: " + errors, 400);
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message("Violations de contraintes: " + errors)
+            .data(null)
+            .build();
+
         return Mono.just(ResponseEntity.badRequest().body(response));
     }
 
@@ -50,7 +60,27 @@ public class GlobalReactiveExceptionHandler {
     public Mono<ResponseEntity<ApiResponse<Object>>> handleIllegalArgument(
         IllegalArgumentException ex, ServerWebExchange exchange) {
         log.error("Illegal argument: {}", ex.getMessage());
-        ApiResponse<Object> response = ApiResponse.error(ex.getMessage(), 400);
+
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message(ex.getMessage())
+            .data(null)
+            .build();
+
+        return Mono.just(ResponseEntity.badRequest().body(response));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public Mono<ResponseEntity<ApiResponse<Object>>> handleIllegalState(
+        IllegalStateException ex, ServerWebExchange exchange) {
+        log.error("Illegal state: {}", ex.getMessage());
+
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message(ex.getMessage())
+            .data(null)
+            .build();
+
         return Mono.just(ResponseEntity.badRequest().body(response));
     }
 
@@ -58,7 +88,13 @@ public class GlobalReactiveExceptionHandler {
     public Mono<ResponseEntity<ApiResponse<Object>>> handleRuntimeException(
         RuntimeException ex, ServerWebExchange exchange) {
         log.error("Runtime exception: {}", ex.getMessage(), ex);
-        ApiResponse<Object> response = ApiResponse.error("Erreur interne du serveur", 500);
+
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message("Erreur interne du serveur")
+            .data(null)
+            .build();
+
         return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response));
     }
 
@@ -66,7 +102,65 @@ public class GlobalReactiveExceptionHandler {
     public Mono<ResponseEntity<ApiResponse<Object>>> handleGenericException(
         Exception ex, ServerWebExchange exchange) {
         log.error("Unexpected error: {}", ex.getMessage(), ex);
-        ApiResponse<Object> response = ApiResponse.error("Une erreur inattendue s'est produite", 500);
+
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message("Une erreur inattendue s'est produite")
+            .data(null)
+            .build();
+
         return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response));
+    }
+
+    /**
+     * Handler pour les erreurs de session d'onboarding non trouvée
+     */
+    @ExceptionHandler(SessionNotFoundException.class)
+    public Mono<ResponseEntity<ApiResponse<Object>>> handleSessionNotFound(
+        SessionNotFoundException ex, ServerWebExchange exchange) {
+        log.error("Session not found: {}", ex.getMessage());
+
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message(ex.getMessage())
+            .data(null)
+            .build();
+
+        return Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).body(response));
+    }
+
+    /**
+     * Handler pour les erreurs de session expirée
+     */
+    @ExceptionHandler(SessionExpiredException.class)
+    public Mono<ResponseEntity<ApiResponse<Object>>> handleSessionExpired(
+        SessionExpiredException ex, ServerWebExchange exchange) {
+        log.error("Session expired: {}", ex.getMessage());
+
+        ApiResponse<Object> response = ApiResponse.<Object>builder()
+            .success(false)
+            .message(ex.getMessage())
+            .data(null)
+            .build();
+
+        return Mono.just(ResponseEntity.status(HttpStatus.GONE).body(response));
+    }
+
+    /**
+     * Exception personnalisée pour session non trouvée
+     */
+    public static class SessionNotFoundException extends RuntimeException {
+        public SessionNotFoundException(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * Exception personnalisée pour session expirée
+     */
+    public static class SessionExpiredException extends RuntimeException {
+        public SessionExpiredException(String message) {
+            super(message);
+        }
     }
 }

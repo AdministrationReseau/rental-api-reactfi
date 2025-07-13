@@ -13,10 +13,10 @@ import java.util.UUID;
 public interface OrganizationReactiveRepository extends ReactiveCassandraRepository<Organization, UUID> {
 
     /**
-     * Trouve une organisation par propriétaire
+     * Trouve une organisation par nom
      */
-    @Query("SELECT * FROM organizations WHERE owner_id = ?0 ALLOW FILTERING")
-    Mono<Organization> findByOwnerId(UUID ownerId);
+    @Query("SELECT * FROM organizations WHERE name = ?0 ALLOW FILTERING")
+    Mono<Organization> findByName(String name);
 
     /**
      * Trouve les organisations actives
@@ -25,14 +25,20 @@ public interface OrganizationReactiveRepository extends ReactiveCassandraReposit
     Flux<Organization> findAllActive();
 
     /**
-     * Vérifie si un nom d'organisation existe
+     * Trouve les organisations par propriétaire
+     */
+    @Query("SELECT * FROM organizations WHERE owner_id = ?0 ALLOW FILTERING")
+    Flux<Organization> findByOwnerId(UUID ownerId);
+
+    /**
+     * Vérifie si une organisation existe par nom
      */
     @Query("SELECT COUNT(*) FROM organizations WHERE name = ?0 ALLOW FILTERING")
     Mono<Long> countByName(String name);
 
     /**
-     * Trouve une organisation par numéro d'enregistrement
+     * Trouve les organisations par secteur d'activité
      */
-    @Query("SELECT * FROM organizations WHERE registration_number = ?0 ALLOW FILTERING")
-    Mono<Organization> findByRegistrationNumber(String registrationNumber);
+    @Query("SELECT * FROM organizations WHERE business_sector = ?0 ALLOW FILTERING")
+    Flux<Organization> findByBusinessSector(String businessSector);
 }

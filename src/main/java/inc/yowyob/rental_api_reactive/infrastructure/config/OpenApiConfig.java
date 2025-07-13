@@ -17,16 +17,18 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
             .info(new Info()
-                .title("Rental API Reactive")
-                .version("1.0.0")
-                .description("API réactive pour la gestion de location de véhicules multi-agent")
+                .title("Rental API Reactive - Phase 2")
+                .version("2.0.0")
+                .description("""
+                    API réactive pour la gestion de location de véhicules multi-agent
+                    """)
                 .contact(new Contact()
                     .name("Yowyob Inc")
                     .email("contact@yowyob.inc")
                     .url("https://yowyob.inc"))
                 .license(new License()
-                    .name("Apache 2.0")
-                    .url("https://www.apache.org/licenses/LICENSE-2.0")))
+                    .name("MIT License")
+                    .url("https://opensource.org/licenses/MIT")))
             .servers(List.of(
                 new Server()
                     .url("http://localhost:8080")
