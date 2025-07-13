@@ -7,56 +7,177 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * DTO de réponse utilisateur
+ */
 @Data
 public class UserResponse {
     @JsonProperty("id")
-    private UUID id;
+    public UUID id;
 
     @JsonProperty("email")
-    private String email;
+    public String email;
 
-    @JsonProperty("first_name")
-    private String firstName;
+    @JsonProperty("firstName")
+    public String firstName;
 
-    @JsonProperty("last_name")
-    private String lastName;
+    @JsonProperty("lastName")
+    public String lastName;
 
-    @JsonProperty("full_name")
-    private String fullName;
+    @JsonProperty("fullName")
+    public String fullName;
 
     @JsonProperty("phone")
-    private String phone;
+    public String phone;
 
-    @JsonProperty("user_type")
-    private UserType userType;
+    @JsonProperty("userType")
+    public UserType userType;
 
-    @JsonProperty("organization_id")
-    private UUID organizationId;
+    @JsonProperty("organizationId")
+    public UUID organizationId;
 
-    @JsonProperty("agency_id")
-    private UUID agencyId;
+    @JsonProperty("agencyId")
+    public UUID agencyId;
 
-    @JsonProperty("profile_picture")
-    private String profilePicture;
+    @JsonProperty("profilePicture")
+    public String profilePicture;
 
-    @JsonProperty("is_email_verified")
-    private Boolean isEmailVerified;
+    @JsonProperty("address")
+    public String address;
 
-    @JsonProperty("is_phone_verified")
-    private Boolean isPhoneVerified;
+    @JsonProperty("city")
+    public String city;
 
-    @JsonProperty("preferred_language")
-    private String preferredLanguage;
+    @JsonProperty("country")
+    public String country;
+
+    @JsonProperty("isEmailVerified")
+    public Boolean isEmailVerified;
+
+    @JsonProperty("isPhoneVerified")
+    public Boolean isPhoneVerified;
+
+    @JsonProperty("preferredLanguage")
+    public String preferredLanguage;
 
     @JsonProperty("timezone")
-    private String timezone;
+    public String timezone;
 
-    @JsonProperty("last_login_at")
-    private LocalDateTime lastLoginAt;
+    @JsonProperty("currency")
+    public String currency;
 
-    @JsonProperty("created_at")
+    @JsonProperty("dateFormat")
+    public String dateFormat;
+
+    @JsonProperty("emailNotifications")
+    public Boolean emailNotifications;
+
+    @JsonProperty("smsNotifications")
+    public Boolean smsNotifications;
+
+    @JsonProperty("pushNotifications")
+    public Boolean pushNotifications;
+
+    @JsonProperty("employeeId")
+    public String employeeId;
+
+    @JsonProperty("department")
+    public String department;
+
+    @JsonProperty("position")
+    public String position;
+
+    @JsonProperty("supervisorId")
+    public UUID supervisorId;
+
+    @JsonProperty("hiredAt")
+    public LocalDateTime hiredAt;
+
+    @JsonProperty("mustChangePassword")
+    public Boolean mustChangePassword;
+
+    @JsonProperty("isActive")
+    public Boolean isActive;
+
+    @JsonProperty("lastLoginAt")
+    public LocalDateTime lastLoginAt;
+
+    @JsonProperty("createdAt")
     private LocalDateTime createdAt;
 
-    @JsonProperty("is_active")
-    private Boolean isActive;
+    /**
+     * Vérifie si l'utilisateur est du personnel
+     */
+    @JsonProperty("isPersonnel")
+    public Boolean getIsPersonnel() {
+        return userType == UserType.AGENCY_MANAGER ||
+            userType == UserType.RENTAL_AGENT;
+    }
+
+    /**
+     * Vérifie si l'utilisateur est un client
+     */
+    @JsonProperty("isClient")
+    public Boolean getIsClient() {
+        return userType == UserType.CLIENT;
+    }
+
+    /**
+     * Vérifie si l'utilisateur est un administrateur
+     */
+    @JsonProperty("isAdmin")
+    public Boolean getIsAdmin() {
+        return userType == UserType.SUPER_ADMIN ||
+            userType == UserType.ORGANIZATION_OWNER;
+    }
+
+    /**
+     * Vérifie si l'utilisateur peut gérer une agence
+     */
+    @JsonProperty("canManageAgency")
+    public Boolean getCanManageAgency() {
+        return userType == UserType.ORGANIZATION_OWNER ||
+            userType == UserType.AGENCY_MANAGER;
+    }
+
+    /**
+     * Vérifie si l'utilisateur peut effectuer des locations
+     */
+    @JsonProperty("canHandleRentals")
+    public Boolean getCanHandleRentals() {
+        return userType == UserType.AGENCY_MANAGER ||
+            userType == UserType.RENTAL_AGENT;
+    }
+
+    /**
+     * Vérifie si l'utilisateur est assigné à une agence
+     */
+    @JsonProperty("isAssignedToAgency")
+    public Boolean getIsAssignedToAgency() {
+        return agencyId != null;
+    }
+
+    /**
+     * Obtient le niveau hiérarchique de l'utilisateur
+     */
+    @JsonProperty("hierarchyLevel")
+    public Integer getHierarchyLevel() {
+        return userType != null ? userType.getHierarchyLevel() : 0;
+    }
+
+    /**
+     * Indique si l'utilisateur a besoin de vérifier son email
+     */
+    @JsonProperty("needsEmailVerification")
+    public Boolean getNeedsEmailVerification() {
+        return !Boolean.TRUE.equals(isEmailVerified);
+    }
+
+    /**
+     * Indique si l'utilisateur a besoin de vérifier son téléphone
+     */
+    @JsonProperty("needsPhoneVerification")
+    public Boolean getNeedsPhoneVerification() {
+        return !Boolean.TRUE.equals(isPhoneVerified);
+    }
 }

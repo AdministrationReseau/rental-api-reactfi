@@ -1,5 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.config;
 
+import inc.yowyob.rental_api_reactive.infrastructure.security.config.CustomAuthenticationManager;
+import inc.yowyob.rental_api_reactive.infrastructure.security.config.ReactiveSecurityContextRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -7,10 +10,25 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Configuration de sécurité réactive pour WebFlux (Mis à jour pour Personnel)
+ * Route: src/main/java/inc/yowyob/rental_api_reactive/infrastructure/config/ReactiveSecurityConfig.java
+ */
 @Configuration
 @EnableWebFluxSecurity
+@RequiredArgsConstructor
 public class ReactiveSecurityConfig {
+
+    private final CustomAuthenticationManager customAuthenticationManager;
+    private final ReactiveSecurityContextRepository securityContextRepository;
+    private final AppProperties appProperties;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -20,7 +38,19 @@ public class ReactiveSecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
-            .csrf(csrf -> csrf.disable())
+            // Configuration CORS
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+            // Désactiver CSRF pour API REST
+            .csrf(ServerHttpSecurity.CsrfSpec::disable)
+
+            // Désactiver l'authentification HTTP Basic
+            .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+
+            // Désactiver les formulaires de login
+            .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+
+            // Configuration des autorisations
             .authorizeExchange(exchanges -> exchanges
                 // Documentation API - IMPORTANT pour Swagger
                 .pathMatchers("/v3/api-docs/**").permitAll()
@@ -34,7 +64,12 @@ public class ReactiveSecurityConfig {
                 .pathMatchers("/health").permitAll()
 
                 // Routes publiques - Authentification
-                .pathMatchers("/api/v1/auth/**").permitAll()
+                .pathMatchers("/api/v1/auth/register").permitAll()
+                .pathMatchers("/api/v1/auth/login").permitAll()
+                .pathMatchers("/api/v1/auth/refresh").permitAll()
+                .pathMatchers("/api/v1/auth/forgot-password").permitAll()
+                .pathMatchers("/api/v1/auth/reset-password").permitAll()
+                .pathMatchers("/api/v1/auth/verify-email").permitAll()
 
                 // Routes publiques - Onboarding
                 .pathMatchers("/api/v1/onboarding/**").permitAll()
@@ -42,13 +77,62 @@ public class ReactiveSecurityConfig {
                 // Routes publiques - Forfaits (consultation uniquement)
                 .pathMatchers("/api/v1/subscription/plans/**").permitAll()
 
-                // Pour la Phase 1&2, permettre l'accès aux APIs de base
+                // Routes sécurisées - Authentification
+                .pathMatchers("/api/v1/auth/me").authenticated()
+                .pathMatchers("/api/v1/auth/change-password").authenticated()
+                .pathMatchers("/api/v1/auth/logout").authenticated()
+
+                // Routes sécurisées - Profil utilisateur
+                .pathMatchers("/api/v1/profile/**").authenticated()
+
+                // NOUVELLES ROUTES - Gestion du personnel (Propriétaires d'organisation uniquement)
+                .pathMatchers("/api/v1/personnel/**").authenticated()
+
+                // Temporaire pour développement - À sécuriser dans les phases suivantes
                 .pathMatchers("/api/v1/users/**").permitAll()
                 .pathMatchers("/api/v1/organizations/**").permitAll()
 
-                // Toutes les autres routes nécessitent une authentification (Phase 3+)
-                .anyExchange().permitAll() // Temporaire pour développement
+                // Toutes les autres routes nécessitent une authentification
+                .anyExchange().authenticated()
             )
+
+            // Configuration du gestionnaire d'authentification
+            .authenticationManager(customAuthenticationManager)
+
+            // Configuration du repository de contexte de sécurité
+            .securityContextRepository(securityContextRepository)
+
             .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // Origines autorisées depuis les propriétés
+        configuration.setAllowedOriginPatterns(Arrays.asList(appProperties.getCors().getAllowedOrigins()));
+
+        // Méthodes autorisées
+        configuration.setAllowedMethods(Arrays.asList(appProperties.getCors().getAllowedMethods()));
+
+        // Headers autorisés
+        configuration.setAllowedHeaders(Arrays.asList(appProperties.getCors().getAllowedHeaders()));
+
+        // Headers exposés
+        configuration.setExposedHeaders(List.of(
+            "Access-Control-Allow-Origin",
+            "Access-Control-Allow-Credentials",
+            "Authorization"
+        ));
+
+        // Permettre les credentials
+        configuration.setAllowCredentials(appProperties.getCors().isAllowCredentials());
+
+        // Durée de cache pour les preflight requests
+        configuration.setMaxAge(appProperties.getCors().getMaxAge());
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
