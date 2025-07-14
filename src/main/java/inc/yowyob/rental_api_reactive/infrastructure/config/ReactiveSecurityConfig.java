@@ -18,8 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Configuration de sécurité réactive pour WebFlux (Mis à jour pour Personnel)
- * Route: src/main/java/inc/yowyob/rental_api_reactive/infrastructure/config/ReactiveSecurityConfig.java
+ * Configuration de sécurité réactive pour WebFlux
  */
 @Configuration
 @EnableWebFluxSecurity
@@ -52,7 +51,6 @@ public class ReactiveSecurityConfig {
 
             // Configuration des autorisations
             .authorizeExchange(exchanges -> exchanges
-                // Documentation API - IMPORTANT pour Swagger
                 .pathMatchers("/v3/api-docs/**").permitAll()
                 .pathMatchers("/swagger-ui/**").permitAll()
                 .pathMatchers("/swagger-ui.html").permitAll()
@@ -85,12 +83,15 @@ public class ReactiveSecurityConfig {
                 // Routes sécurisées - Profil utilisateur
                 .pathMatchers("/api/v1/profile/**").authenticated()
 
-                // NOUVELLES ROUTES - Gestion du personnel (Propriétaires d'organisation uniquement)
+                // Gestion du personnel (Propriétaires d'organisation uniquement)
                 .pathMatchers("/api/v1/personnel/**").authenticated()
 
-                // Temporaire pour développement - À sécuriser dans les phases suivantes
+                // À sécuriser dans les phases suivantes
                 .pathMatchers("/api/v1/users/**").permitAll()
                 .pathMatchers("/api/v1/organizations/**").permitAll()
+                .pathMatchers("/api/v1/permissions").permitAll()
+                .pathMatchers("/api/v1/roles").permitAll()
+                .pathMatchers("/api/v1/user-roles").permitAll()
 
                 // Toutes les autres routes nécessitent une authentification
                 .anyExchange().authenticated()

@@ -17,7 +17,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
             .info(new Info()
-                .title("Rental API Reactive - Phase 2")
+                .title("Rental API Reactive")
                 .version("2.0.0")
                 .description("""
                     API réactive pour la gestion de location de véhicules multi-agent
