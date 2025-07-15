@@ -318,24 +318,27 @@ public class AuthReactiveService {
      * Mappe une entité User vers UserResponse
      */
     private UserResponse mapToUserResponse(User user) {
-        UserResponse response = new UserResponse();
-        response.setId(user.getId());
-        response.setEmail(user.getEmail());
-        response.setFirstName(user.getFirstName());
-        response.setLastName(user.getLastName());
-        response.setFullName(user.getFullName());
-        response.setPhone(user.getPhone());
-        response.setUserType(user.getUserType());
-        response.setOrganizationId(user.getOrganizationId());
-        response.setAgencyId(user.getAgencyId());
-        response.setProfilePicture(user.getProfilePicture());
-        response.setIsEmailVerified(user.getIsEmailVerified());
-        response.setIsPhoneVerified(user.getIsPhoneVerified());
-        response.setPreferredLanguage(user.getPreferredLanguage());
-        response.setTimezone(user.getTimezone());
-        response.setLastLoginAt(user.getLastLoginAt());
-        response.setCreatedAt(user.getCreatedAt());
-        response.setIsActive(user.getIsActive());
-        return response;
+        return UserResponse.builder()
+            .id(user.getId())
+            .email(user.getEmail())
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .fullName(user.getFullName())
+            .phone(user.getPhone())
+            .userType(user.getUserType())
+            .organizationId(user.getOrganizationId())
+            .agencyId(user.getAgencyId())
+            .profilePicture(user.getProfilePicture())
+            .isEmailVerified(user.getIsEmailVerified())
+            .isPhoneVerified(user.getIsPhoneVerified())
+            .preferredLanguage(user.getPreferredLanguage())
+            .timezone(user.getTimezone())
+            .lastLoginAt(user.getLastLoginAt())
+            .createdAt(user.getCreatedAt())
+            .isActive(user.getIsActive())
+            .address(user.getAddress())
+            .city(user.getCity())
+            .country(user.getCountry())
+            .build();
     }
 }

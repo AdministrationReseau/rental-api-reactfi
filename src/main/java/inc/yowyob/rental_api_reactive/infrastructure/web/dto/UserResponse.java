@@ -2,7 +2,10 @@ package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import inc.yowyob.rental_api_reactive.application.dto.UserType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,7 +13,10 @@ import java.util.UUID;
 /**
  * DTO de réponse utilisateur
  */
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponse {
     @JsonProperty("id")
     public UUID id;
@@ -103,7 +109,7 @@ public class UserResponse {
     public LocalDateTime lastLoginAt;
 
     @JsonProperty("createdAt")
-    private LocalDateTime createdAt;
+    public LocalDateTime createdAt;
 
     /**
      * Vérifie si l'utilisateur est du personnel

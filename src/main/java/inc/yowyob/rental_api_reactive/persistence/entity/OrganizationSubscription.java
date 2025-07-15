@@ -88,8 +88,7 @@ public class OrganizationSubscription extends BaseEntity {
     private String cancellationReason;
 
     // Constructors
-    public OrganizationSubscription(UUID organizationId, UUID subscriptionPlanId, LocalDateTime startDate,
-                                    LocalDateTime endDate, BigDecimal amount, PaymentMethod paymentMethod) {
+    public OrganizationSubscription(UUID organizationId, UUID subscriptionPlanId, BigDecimal amount, PaymentMethod paymentMethod) {
         this.id = UUID.randomUUID();
         this.organizationId = organizationId;
         this.subscriptionPlanId = subscriptionPlanId;

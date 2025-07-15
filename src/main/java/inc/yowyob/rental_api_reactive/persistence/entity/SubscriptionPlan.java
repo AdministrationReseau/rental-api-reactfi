@@ -84,6 +84,18 @@ public class SubscriptionPlan extends BaseEntity {
     @JsonProperty("sort_order")
     private Integer sortOrder = 0;
 
+    @Column("hasGeofencing")
+    @JsonProperty("hasGeofencing")
+    private Boolean hasGeofencing = false;
+
+    @Column("hasChat")
+    @JsonProperty("hasChat")
+    private Boolean hasChat = false;
+
+    @Column("hasAnalytics")
+    @JsonProperty("hasAnalytics")
+    private Boolean hasAnalytics = false;
+
     // Constructors
     public SubscriptionPlan(String name, BigDecimal price, String currency, Integer durationDays) {
         this.id = UUID.randomUUID();

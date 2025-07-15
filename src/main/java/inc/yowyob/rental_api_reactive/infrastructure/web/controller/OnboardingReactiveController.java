@@ -1,232 +1,131 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.controller;
 
 import inc.yowyob.rental_api_reactive.application.service.OnboardingReactiveService;
-import inc.yowyob.rental_api_reactive.application.service.SubscriptionPlanReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
-import inc.yowyob.rental_api_reactive.persistence.entity.SubscriptionPlan;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.UUID;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/onboarding")
 @RequiredArgsConstructor
-@Tag(name = "Onboarding", description = "APIs reactives pour le processus d'inscription d'organisation")
+@Tag(name = "Onboarding", description = "APIs réactives pour le processus d'inscription et de création d'organisation")
 public class OnboardingReactiveController {
 
     private final OnboardingReactiveService onboardingService;
-    private final SubscriptionPlanReactiveService subscriptionPlanService;
 
     @Operation(
-        summary = "Récupérer les forfaits disponibles pour l'onboarding",
-        description = "Retourne la liste des forfaits d'abonnement disponibles pour l'inscription"
+        summary = "Démarrer une nouvelle session d'onboarding",
+        description = "Crée une nouvelle session et retourne un token de session pour les étapes suivantes."
     )
-    @GetMapping("/plans")
-    public Mono<ApiResponse<Flux<SubscriptionPlan>>> getAvailablePlans() {
-        log.info("GET /onboarding/plans - Fetching available subscription plans");
-
-        return Mono.fromCallable(() -> subscriptionPlanService.getAllActivePlans())
-            .map(plans -> ApiResponse.<Flux<SubscriptionPlan>>builder()
+    @PostMapping("/start")
+    public Mono<ApiResponse<OnboardingResponse>> startOnboarding() {
+        log.info("POST /onboarding/start - Starting new onboarding session");
+        return onboardingService.startOnboarding()
+            .map(response -> ApiResponse.<OnboardingResponse>builder()
                 .success(true)
-                .message("Forfaits d'abonnement disponibles récupérés avec succès")
-                .data(plans)
+                .message("Session d'onboarding démarrée avec succès.")
+                .data(response)
                 .build())
-            .doOnSuccess(response -> log.info("Successfully fetched subscription plans for onboarding"))
-            .onErrorReturn(ApiResponse.<Flux<SubscriptionPlan>>builder()
-                .success(false)
-                .message("Erreur lors de la récupération des forfaits d'abonnement")
-                .build());
+            .doOnError(error -> log.error("Failed to start onboarding session", error));
     }
 
     @Operation(
-        summary = "Créer une session d'onboarding",
-        description = "Démarre un nouveau processus d'inscription pour un futur propriétaire"
+        summary = "Récupérer le statut d'une session d'onboarding",
+        description = "Retourne l'état actuel d'une session d'onboarding, y compris l'étape en cours."
     )
-    @PostMapping("/session")
-    public Mono<ApiResponse<OnboardingSessionResponse>> createSession() {
-        log.info("POST /onboarding/session - Creating new onboarding session");
+    @GetMapping("/{sessionToken}/status")
+    public Mono<ApiResponse<OnboardingResponse>> getOnboardingStatus(
+        @Parameter(description = "Token de la session d'onboarding") @PathVariable String sessionToken) {
 
-        return onboardingService.createOnboardingSession()
-            .map(session -> ApiResponse.<OnboardingSessionResponse>builder()
+        log.info("GET /onboarding/{}/status - Fetching onboarding status", sessionToken);
+        return onboardingService.getOnboardingStatus(sessionToken)
+            .map(response -> ApiResponse.<OnboardingResponse>builder()
                 .success(true)
-                .message("Session d'onboarding créée avec succès")
-                .data(session)
+                .message("Statut de la session récupéré avec succès.")
+                .data(response)
                 .build())
-            .doOnSuccess(response -> log.info("Successfully created onboarding session"))
-            .onErrorReturn(ApiResponse.<OnboardingSessionResponse>builder()
-                .success(false)
-                .message("Erreur lors de la création de la session d'onboarding")
-                .build());
+            .doOnError(error -> log.error("Failed to get onboarding status for session {}", sessionToken, error));
     }
 
     @Operation(
-        summary = "Récupérer une session d'onboarding",
-        description = "Retourne les détails d'une session d'onboarding spécifique"
+        summary = "Étape 1: Sauvegarder les informations du propriétaire",
+        description = "Sauvegarde les informations sur le propriétaire du compte (email, mot de passe, etc.)."
     )
-    @GetMapping("/session/{sessionId}")
-    public Mono<ApiResponse<OnboardingSessionResponse>> getSession(
-        @Parameter(description = "ID de la session d'onboarding")
-        @PathVariable UUID sessionId
-    ) {
-        log.info("GET /onboarding/session/{} - Fetching onboarding session", sessionId);
+    @PutMapping("/{sessionToken}/owner")
+    public Mono<ApiResponse<OnboardingResponse>> saveOwnerInfo(
+        @Parameter(description = "Token de la session d'onboarding") @PathVariable String sessionToken,
+        @Valid @RequestBody OnboardingOwnerRequest ownerRequest) {
 
-        return onboardingService.getOnboardingSession(sessionId)
-            .map(session -> ApiResponse.<OnboardingSessionResponse>builder()
+        log.info("PUT /onboarding/{}/owner - Saving owner info", sessionToken);
+        return onboardingService.saveOwnerInfo(sessionToken, ownerRequest)
+            .map(response -> ApiResponse.<OnboardingResponse>builder()
                 .success(true)
-                .message("Session d'onboarding récupérée avec succès")
-                .data(session)
+                .message("Étape 1: Informations du propriétaire sauvegardées.")
+                .data(response)
                 .build())
-            .onErrorReturn(ApiResponse.<OnboardingSessionResponse>builder()
-                .success(false)
-                .message("Session d'onboarding non trouvée")
-                .build());
+            .doOnError(error -> log.error("Error saving owner info for session {}", sessionToken, error));
     }
 
     @Operation(
-        summary = "Récupérer une session par token",
-        description = "Retourne les détails d'une session d'onboarding par son token"
+        summary = "Étape 2: Sauvegarder les informations de l'organisation",
+        description = "Sauvegarde les informations sur l'organisation (nom, type, adresse, etc.)."
     )
-    @GetMapping("/session/token/{sessionToken}")
-    public Mono<ApiResponse<OnboardingSessionResponse>> getSessionByToken(
-        @Parameter(description = "Token de la session d'onboarding")
-        @PathVariable String sessionToken
-    ) {
-        log.info("GET /onboarding/session/token/{} - Fetching onboarding session by token", sessionToken);
+    @PutMapping("/{sessionToken}/organization")
+    public Mono<ApiResponse<OnboardingResponse>> saveOrganizationInfo(
+        @Parameter(description = "Token de la session d'onboarding") @PathVariable String sessionToken,
+        @Valid @RequestBody OnboardingOrganizationRequest orgRequest) {
 
-        return onboardingService.getSessionByToken(sessionToken)
-            .map(session -> ApiResponse.<OnboardingSessionResponse>builder()
+        log.info("PUT /onboarding/{}/organization - Saving organization info", sessionToken);
+        return onboardingService.saveOrganizationInfo(sessionToken, orgRequest)
+            .map(response -> ApiResponse.<OnboardingResponse>builder()
                 .success(true)
-                .message("Session d'onboarding récupérée avec succès")
-                .data(session)
+                .message("Étape 2: Informations de l'organisation sauvegardées.")
+                .data(response)
                 .build())
-            .onErrorReturn(ApiResponse.<OnboardingSessionResponse>builder()
-                .success(false)
-                .message("Session d'onboarding non trouvée pour ce token")
-                .build());
+            .doOnError(error -> log.error("Error saving organization info for session {}", sessionToken, error));
     }
 
     @Operation(
-        summary = "Sauvegarder les informations du propriétaire (Étape 1)",
-        description = "Sauvegarde les informations personnelles du futur propriétaire"
+        summary = "Étape 3: Sauvegarder les informations de l'abonnement",
+        description = "Sauvegarde le choix du plan d'abonnement et les informations de paiement."
     )
-    @PutMapping("/session/{sessionId}/owner-info")
-    public Mono<ApiResponse<OnboardingSessionResponse>> saveOwnerInfo(
-        @Parameter(description = "ID de la session d'onboarding")
-        @PathVariable UUID sessionId,
-        @Parameter(description = "Informations du futur propriétaire")
-        @Valid @RequestBody OwnerInfoRequest ownerInfo
-    ) {
-        log.info("PUT /onboarding/session/{}/owner-info - Saving owner information", sessionId);
+    @PutMapping("/{sessionToken}/subscription")
+    public Mono<ApiResponse<OnboardingResponse>> saveSubscriptionInfo(
+        @Parameter(description = "Token de la session d'onboarding") @PathVariable String sessionToken,
+        @Valid @RequestBody OnboardingSubscriptionRequest subscriptionRequest) {
 
-        return onboardingService.saveOwnerInfo(sessionId, ownerInfo)
-            .map(session -> ApiResponse.<OnboardingSessionResponse>builder()
+        log.info("PUT /onboarding/{}/subscription - Saving subscription info", sessionToken);
+        return onboardingService.saveSubscriptionInfo(sessionToken, subscriptionRequest)
+            .map(response -> ApiResponse.<OnboardingResponse>builder()
                 .success(true)
-                .message("Informations du propriétaire sauvegardées avec succès")
-                .data(session)
+                .message("Étape 3: Informations de l'abonnement sauvegardées.")
+                .data(response)
                 .build())
-            .onErrorReturn(ApiResponse.<OnboardingSessionResponse>builder()
-                .success(false)
-                .message("Erreur lors de la sauvegarde des informations du propriétaire")
-                .build());
+            .doOnError(error -> log.error("Error saving subscription info for session {}", sessionToken, error));
     }
 
     @Operation(
-        summary = "Sauvegarder les informations de l'organisation (Étape 2)",
-        description = "Sauvegarde les informations et politiques de l'organisation"
+        summary = "Finaliser l'onboarding",
+        description = "Valide toutes les informations collectées, crée l'utilisateur, l'organisation, l'abonnement, et clôture la session."
     )
-    @PutMapping("/session/{sessionId}/organization-info")
-    public Mono<ApiResponse<OnboardingSessionResponse>> saveOrganizationInfo(
-        @Parameter(description = "ID de la session d'onboarding")
-        @PathVariable UUID sessionId,
-        @Parameter(description = "Informations de l'organisation")
-        @Valid @RequestBody OrganizationInfoRequest organizationInfo
-    ) {
-        log.info("PUT /onboarding/session/{}/organization-info - Saving organization information", sessionId);
+    @PostMapping("/{sessionToken}/complete")
+    public Mono<ApiResponse<OnboardingCompletionResponse>> completeOnboarding(
+        @Parameter(description = "Token de la session d'onboarding") @PathVariable String sessionToken) {
 
-        return onboardingService.saveOrganizationInfo(sessionId, organizationInfo)
-            .map(session -> ApiResponse.<OnboardingSessionResponse>builder()
+        log.info("POST /onboarding/{}/complete - Completing onboarding process", sessionToken);
+        return onboardingService.completeOnboarding(sessionToken)
+            .map(response -> ApiResponse.<OnboardingCompletionResponse>builder()
                 .success(true)
-                .message("Informations de l'organisation sauvegardées avec succès")
-                .data(session)
+                .message(response.getMessage())
+                .data(response)
                 .build())
-            .onErrorReturn(ApiResponse.<OnboardingSessionResponse>builder()
-                .success(false)
-                .message("Erreur lors de la sauvegarde des informations de l'organisation")
-                .build());
-    }
-
-    @Operation(
-        summary = "Finaliser le processus d'onboarding (Étape 3)",
-        description = "Traite le paiement et finalise la création du compte et de l'organisation"
-    )
-    @PostMapping("/session/{sessionId}/complete")
-    public Mono<ApiResponse<OnboardingCompletedResponse>> completeOnboarding(
-        @Parameter(description = "ID de la session d'onboarding")
-        @PathVariable UUID sessionId,
-        @Parameter(description = "Informations de souscription et paiement")
-        @Valid @RequestBody SubscriptionInfoRequest subscriptionInfo
-    ) {
-        log.info("POST /onboarding/session/{}/complete - Completing onboarding", sessionId);
-
-        return onboardingService.completeOnboarding(sessionId, subscriptionInfo)
-            .map(result -> ApiResponse.<OnboardingCompletedResponse>builder()
-                .success(true)
-                .message("Processus d'inscription terminé avec succès")
-                .data(result)
-                .build())
-            .onErrorReturn(ApiResponse.<OnboardingCompletedResponse>builder()
-                .success(false)
-                .message("Erreur lors de la finalisation du processus d'inscription")
-                .build());
-    }
-
-    @Operation(
-        summary = "Obtenir les sessions actives",
-        description = "Retourne toutes les sessions d'onboarding actuellement en cours"
-    )
-    @GetMapping("/sessions/active")
-    public Mono<ApiResponse<Flux<OnboardingSessionResponse>>> getActiveSessions() {
-        log.info("GET /onboarding/sessions/active - Fetching active onboarding sessions");
-
-        return Mono.fromCallable(() -> onboardingService.getActiveSessions())
-            .map(sessions -> ApiResponse.<Flux<OnboardingSessionResponse>>builder()
-                .success(true)
-                .message("Sessions actives récupérées avec succès")
-                .data(sessions)
-                .build())
-            .onErrorReturn(ApiResponse.<Flux<OnboardingSessionResponse>>builder()
-                .success(false)
-                .message("Erreur lors de la récupération des sessions actives")
-                .build());
-    }
-
-    @Operation(
-        summary = "Nettoyer les sessions expirées",
-        description = "Met à jour le statut des sessions expirées (tâche administrative)"
-    )
-    @PostMapping("/sessions/cleanup")
-    public Mono<ApiResponse<String>> cleanupExpiredSessions() {
-        log.info("POST /onboarding/sessions/cleanup - Cleaning up expired sessions");
-
-        return onboardingService.cleanupExpiredSessions()
-            .map(count -> ApiResponse.<String>builder()
-                .success(true)
-                .message("Nettoyage effectué avec succès")
-                .data(count + " sessions expirées traitées")
-                .build())
-            .onErrorReturn(ApiResponse.<String>builder()
-                .success(false)
-                .message("Erreur lors du nettoyage des sessions expirées")
-                .build());
+            .doOnError(error -> log.error("Failed to complete onboarding for session {}", sessionToken, error));
     }
 }
