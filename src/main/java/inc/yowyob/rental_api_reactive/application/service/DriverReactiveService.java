@@ -181,4 +181,9 @@ public class DriverReactiveService {
                 .doOnSuccess(v -> log.info("Driver with ID {} deleted successfully", driverId))
                 .doOnError(error -> log.error("Failed to delete driver {}: {}", driverId, error));
     }
+
+    public Flux<DriverResponse> getAllDriversByAgency(UUID agencyId, Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllDriversByAgency'");
+    }
 }

@@ -26,7 +26,6 @@ public abstract class AgencyMapper {
     @Mapping(target = "hasLocation", expression = "java(agency.hasLocation())")
     @Mapping(target = "hasGeofencing", expression = "java(agency.hasGeofencing())")
     @Mapping(target = "isCurrentlyOpen", expression = "java(agency.isCurrentlyOpen())")
-    @Mapping(target = "vehicleUtilizationRate", expression = "java(agency.getVehicleUtilizationRate())")
     @Mapping(target = "driverActivityRate", expression = "java(agency.getDriverActivityRate())")
     public abstract AgencyResponse toResponse(Agency agency);
 

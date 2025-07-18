@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * DTO de réponse API standard
  */
@@ -50,10 +52,15 @@ public class ApiResponse<T> {
             .build();
     }
 
-    public static <T> ApiResponse<T> error(String message) {
+    public static <T> ApiResponse<T> error(String message, HttpStatus notFound) {
         return ApiResponse.<T>builder()
             .success(false)
             .message(message)
             .build();
+    }
+
+    public static Object success(DriverResponse driverDto, String string, HttpStatus created) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'success'");
     }
 }
