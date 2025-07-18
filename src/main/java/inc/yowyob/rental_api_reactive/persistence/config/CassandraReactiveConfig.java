@@ -2,7 +2,12 @@ package inc.yowyob.rental_api_reactive.persistence.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper; // <<< NOUVEAU
 import inc.yowyob.rental_api_reactive.persistence.converter.JsonStringToMapConverter;
+import inc.yowyob.rental_api_reactive.persistence.converter.JsonToWorkingHoursConverter;
 import inc.yowyob.rental_api_reactive.persistence.converter.MapToJsonStringConverter;
+import inc.yowyob.rental_api_reactive.persistence.converter.MoneyToStringConverter;
+import inc.yowyob.rental_api_reactive.persistence.converter.StringToMoneyConverter;
+import inc.yowyob.rental_api_reactive.persistence.converter.WorkingHoursToJsonConverter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractReactiveCassandraConfiguration;
@@ -84,7 +89,12 @@ public class CassandraReactiveConfig extends AbstractReactiveCassandraConfigurat
     public CassandraCustomConversions customConversions() {
         return new CassandraCustomConversions(List.of(
                 new MapToJsonStringConverter(objectMapper),
-                new JsonStringToMapConverter(objectMapper)
+                new JsonStringToMapConverter(objectMapper),
+                new MoneyToStringConverter(),
+                new StringToMoneyConverter(),
+                new WorkingHoursToJsonConverter(),
+                new JsonToWorkingHoursConverter()
         ));
     }
+
 }
