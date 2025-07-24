@@ -5,7 +5,6 @@ import lombok.Data;
 import org.springframework.data.cassandra.core.mapping.Column;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 public abstract class BaseEntity {

@@ -29,6 +29,14 @@ public class ReactiveSecurityConfig {
     private final ReactiveSecurityContextRepository securityContextRepository;
     private final AppProperties appProperties;
 
+    // ✅ DÉFINISSONS UNE LISTE PROPRE POUR LES CHEMINS SWAGGER
+    // private static final String[] SWAGGER_PATHS = {
+    //     "/api/v1/swagger-ui.html",
+    //     "/api/v1/swagger-ui/**",
+    //     "/api/v1/v3/api-docs/**",
+    //     "/webjars/**" // Les webjars sont souvent servis à la racine, on garde ce chemin par sécurité
+    // };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
@@ -51,6 +59,7 @@ public class ReactiveSecurityConfig {
 
             // Configuration des autorisations
             .authorizeExchange(exchanges -> exchanges
+                // .pathMatchers(SWAGGER_PATHS).permitAll()
                 .pathMatchers("/v3/api-docs/**").permitAll()
                 .pathMatchers("/swagger-ui/**").permitAll()
                 .pathMatchers("/swagger-ui.html").permitAll()
@@ -88,6 +97,7 @@ public class ReactiveSecurityConfig {
 
                 // À sécuriser dans les phases suivantes
                 .pathMatchers("/api/v1/users/**").permitAll()
+                .pathMatchers("/api/v1/drivers/**").permitAll()
                 .pathMatchers("/api/v1/organizations/**").permitAll()
                 .pathMatchers("/api/v1/permissions").permitAll()
                 .pathMatchers("/api/v1/roles").permitAll()
