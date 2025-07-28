@@ -1,5 +1,3 @@
-// PATH: src/main/java/inc/yowyob/rental_api_reactive/persistence/mapper/DriverMapper.java
-
 package inc.yowyob.rental_api_reactive.persistence.mapper;
 
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.CreateDriverRequest;
@@ -23,38 +21,110 @@ public interface DriverMapper {
 
     /**
      * Méthode 1: Crée une entité Driver à partir d'un DTO de création.
-     * Les annotations ici ignorent les champs qui seront définis par le service.
      */
     @Mapping(target = "driverId", ignore = true)
-    // @Mapping(target = "createdAt", ignore = true)
-    // @Mapping(target = "updatedAt", ignore = true)
-    // @Mapping(target = "status", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "statusUpdatedAt", ignore = true)
     @Mapping(target = "statusUpdatedBy", ignore = true)
-    Driver fromCreateRequest(CreateDriverRequest dto);
+    @Mapping(target = "assignedVehicleIds", ignore = true)
+    @Mapping(target = "location", ignore = true)
+    @Mapping(target = "insuranceProvider", ignore = true)
+    @Mapping(target = "insurancePolicy", ignore = true)
+    
+    // Mappings explicites avec les nouveaux noms
+    @Mapping(source = "createDto.licenseExpiryDate", target = "licenseExpiryDate")
+    @Mapping(source = "createDto.experience", target = "experience")
+    @Mapping(source = "createDto.status", target = "status")
+    @Mapping(source = "createDto.employeeId", target = "employeeId")
+    @Mapping(source = "createDto.position", target = "position")
+    @Mapping(source = "createDto.department", target = "department")
+    @Mapping(source = "createDto.hireDate", target = "hireDate")
+    @Mapping(source = "createDto.hourlyRate", target = "hourlyRate")
+    @Mapping(source = "createDto.workingHours", target = "workingHours")
+    @Mapping(source = "createDto.idCardUrl", target = "idCardUrl")
+    @Mapping(source = "createDto.driverLicenseUrl", target = "driverLicenseUrl")
+    
+    // Valeurs par défaut 
+    @Mapping(target = "rating", expression = "java(createDto.getRating() != null ? createDto.getRating() : 0.0)")
+    Driver fromCreateRequest(CreateDriverRequest createDto);
 
     /**
      * Méthode 2: Met à jour une entité Driver existante à partir d'un DTO de mise à jour.
-     * Les annotations ici empêchent d'écraser des champs avec des valeurs nulles.
      */
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "driverId", ignore = true)
     @Mapping(target = "userId", ignore = true)
     @Mapping(target = "organizationId", ignore = true)
+    @Mapping(target = "agencyId", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "statusUpdatedAt", ignore = true) // Géré par le service
+    @Mapping(target = "statusUpdatedBy", ignore = true) // Géré par le service
+    
+    // Mappings explicites pour les champs renommés
+    @Mapping(source = "dto.licenseExpiryDate", target = "licenseExpiryDate")
+    @Mapping(source = "dto.experience", target = "experience")
+    @Mapping(source = "dto.assignedVehicleIds", target = "assignedVehicleIds")
+    @Mapping(source = "dto.status", target = "status")
+    @Mapping(source = "dto.hireDate", target = "hireDate")
+    @Mapping(source = "dto.hourlyRate", target = "hourlyRate")
+    @Mapping(source = "dto.workingHours", target = "workingHours")
+    @Mapping(source = "dto.insuranceProvider", target = "insuranceProvider")
+    @Mapping(source = "dto.insurancePolicy", target = "insurancePolicy")
+    @Mapping(source = "dto.idCardUrl", target = "idCardUrl")
+    @Mapping(source = "dto.driverLicenseUrl", target = "driverLicenseUrl")
     void updateFromRequest(UpdateDriverRequest dto, @MappingTarget Driver entity);
 
     /**
      * Méthode 3: Combine les entités Driver et User en un seul DTO de réponse.
-     * C'EST ICI QUE TOUTES LES ANNOTATIONS DE MAPPING EXPLICITES DOIVENT SE TROUVER.
      */
-    // Mappings pour lever les ambiguïtés (champs avec le même nom)
+    
+    // === MAPPINGS DEPUIS DRIVER ===
+    @Mapping(source = "driver.driverId", target = "driverId")
+    @Mapping(source = "driver.organizationId", target = "organizationId")
+    @Mapping(source = "driver.agencyId", target = "agencyId")
     @Mapping(source = "driver.createdAt", target = "createdAt")
     @Mapping(source = "driver.updatedAt", target = "updatedAt")
-    @Mapping(source = "driver.organizationId", target = "organizationId")
-    @Mapping(source = "driver.position", target = "position")
+    @Mapping(source = "driver.createdBy", target = "createdBy")
+    @Mapping(source = "driver.updatedBy", target = "updatedBy")
     
-    // Mappings depuis l'entité User
+    // Informations permis et expérience
+    @Mapping(source = "driver.licenseNumber", target = "licenseNumber")
+    @Mapping(source = "driver.licenseType", target = "licenseType")
+    @Mapping(source = "driver.licenseExpiryDate", target = "licenseExpiryDate")
+    @Mapping(source = "driver.experience", target = "experienceYears")
+    
+    // Localisation et documents
+    @Mapping(source = "driver.location", target = "location")
+    @Mapping(source = "driver.idCardUrl", target = "idCardUrl")
+    @Mapping(source = "driver.driverLicenseUrl", target = "driverLicenseUrl")
+    
+    // Véhicules et évaluation
+    @Mapping(source = "driver.assignedVehicleIds", target = "assignedVehicleIds")
+    @Mapping(source = "driver.rating", target = "rating")
+    
+    // Assurance
+    @Mapping(source = "driver.insuranceProvider", target = "insuranceProvider")
+    @Mapping(source = "driver.insurancePolicy", target = "insurancePolicy")
+    
+    // Statut du chauffeur
+    @Mapping(source = "driver.status", target = "status")
+    @Mapping(source = "driver.statusUpdatedAt", target = "statusUpdatedAt")
+    @Mapping(source = "driver.statusUpdatedBy", target = "statusUpdatedBy")
+    
+    // Informations employé
+    @Mapping(source = "driver.employeeId", target = "employeeId")
+    @Mapping(source = "driver.position", target = "position")
+    @Mapping(source = "driver.department", target = "department")
+    @Mapping(source = "driver.hireDate", target = "hireDate")
+    @Mapping(source = "driver.hourlyRate", target = "hourlyRate")
+    @Mapping(source = "driver.workingHours", target = "workingHours")
+    @Mapping(source = "driver.dateOfBirth", target = "dateOfBirth") // Depuis User, pas Driver
+   
+    // === MAPPINGS DEPUIS USER ===
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.firstName", target = "firstName")
     @Mapping(source = "user.lastName", target = "lastName")
@@ -62,21 +132,26 @@ public interface DriverMapper {
     @Mapping(source = "user.phone", target = "phone")
     @Mapping(source = "user.profilePicture", target = "profileImageUrl")
     @Mapping(source = "user.userType", target = "userType")
-    
-    // Mappings depuis l'entité Driver (champs restants)
-    @Mapping(source = "driver.driverId", target = "driverId")
-    @Mapping(source = "driver.agencyId", target = "agencyId")
-    @Mapping(source = "driver.department", target = "department")
-    @Mapping(source = "driver.employeeId", target = "employeeId") // Vérifiez ce nom dans votre entité
-    @Mapping(source = "driver.licenseExpiryDate", target = "licenseExpiryDate") // Vérifiez ce nom
-    @Mapping(source = "driver.experience", target = "experience") // Vérifiez ce nom
-    
-    // Expression pour les champs dérivés
+   
+    // === EXPRESSIONS POUR CHAMPS CALCULÉS ===
     @Mapping(target = "fullName", expression = "java(user != null ? user.getFirstName() + \" \" + user.getLastName() : \"\")")
-
-    // Ignorer les champs calculés du DTO
-    @Mapping(target = "age", ignore = true)
-    @Mapping(target = "yearsOfService", ignore = true)
-    @Mapping(target = "isLicenseExpired", ignore = true)
+    
+    // Champs dérivés liés au statut
+    @Mapping(target = "isAvailable", expression = "java(driver.isAvailable())")
+    @Mapping(target = "isOnDuty", expression = "java(driver.isOnDuty())")
+    @Mapping(target = "isOffDuty", expression = "java(driver.isOffDuty())")
+    @Mapping(target = "isOnLeave", expression = "java(driver.isOnLeave())")
+    @Mapping(target = "canBeAssigned", expression = "java(driver.canBeAssigned())")
+    @Mapping(target = "isWorkReady", expression = "java(driver.isWorkReady())")
+    
+    // Champs dérivés métier
+    @Mapping(target = "isLicenseExpired", expression = "java(driver.isLicenseExpired())")
+    @Mapping(target = "assignedVehicleCount", expression = "java(driver.getAssignedVehicleCount())")
+    @Mapping(target = "hasAssignedVehicles", expression = "java(driver.hasAssignedVehicles())")
+    
+    // Calculs d'âge et ancienneté (si dateOfBirth disponible via User)
+    @Mapping(target = "age", expression = "java(user != null && user.getDateOfBirth() != null ? java.time.Period.between(user.getDateOfBirth(), java.time.LocalDate.now()).getYears() : null)")
+    @Mapping(target = "yearsOfService", expression = "java(driver.getHireDate() != null ? java.time.Period.between(driver.getHireDate(), java.time.LocalDate.now()).getYears() : null)")
+    
     DriverResponse toResponse(Driver driver, User user);
 }

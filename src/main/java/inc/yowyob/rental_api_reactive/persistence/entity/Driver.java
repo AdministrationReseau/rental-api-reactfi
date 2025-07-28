@@ -1,9 +1,9 @@
 package inc.yowyob.rental_api_reactive.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import inc.yowyob.rental_api_reactive.application.dto.DriverStatus;
 import inc.yowyob.rental_api_reactive.application.dto.Money;
 import inc.yowyob.rental_api_reactive.application.dto.WorkingHours;
-import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
@@ -21,131 +21,179 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("drivers")
-public class Driver extends BaseEntity {
+public class Driver {
+    
+    // === CLÉS ET IDENTIFIANTS ===
     
     @PrimaryKeyColumn(name = "driver_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
-    @JsonProperty("driver_id")
     private UUID driverId;
 
-    @NotNull(message = "User ID is required")
     @Column("user_id")
-    @JsonProperty("user_id")
     private UUID userId;
 
-    @NotNull(message = "Organization ID is required")
     @Column("organization_id")
-    @JsonProperty("organization_id")
     private UUID organizationId;
 
     @Column("agency_id")
-    @JsonProperty("agency_id")
-    private UUID agencyId; // Lien vers l'agence (peut être null)
+    private UUID agencyId;
 
-    @Column("date_of_birth")
-    @NotNull
-    private LocalDate dateOfBirth;
-
+    // === INFORMATIONS PERMIS DE CONDUIRE ===
+    
     @Column("license_number")
-    @NotBlank(message = "License number is required")
     private String licenseNumber;
 
     @Column("license_type")
-    @NotBlank(message = "License type is required")
     private String licenseType;
 
-    @Column("license_expiry")
+    @Column("license_expiry_date")
     private LocalDate licenseExpiryDate;
 
-    @Column("experience")
-    @Min(0)
+    @Column("experience_years")
     private Integer experience; // Années d'expérience
 
-    @Column("location")
-    private String location;
-
+    // === DOCUMENTS ===
+    
     @Column("id_card_url")
     private String idCardUrl;
 
     @Column("driver_license_url")
     private String driverLicenseUrl;
 
+    // === INFORMATIONS OPÉRATIONNELLES ===
+    
+    @Column("location")
+    private String location;
+
     @Column("assigned_vehicle_ids")
+    @CassandraType(type = CassandraType.Name.LIST, typeArguments = CassandraType.Name.UUID)
     private List<UUID> assignedVehicleIds;
 
-    @NotNull(message = "Availability status is required")
-    @Column("available")
-    @JsonProperty("available")
-    private Boolean available = true;
-
     @Column("rating")
-    @DecimalMin(value = "0.0") @DecimalMax(value = "5.0")
-    @JsonProperty("rating")
     private Double rating = 0.0;
 
+    // === ASSURANCE ===
+    
     @Column("insurance_provider")
-    @JsonProperty("insuranceProvider")
     private String insuranceProvider;
 
     @Column("insurance_policy")
-    @JsonProperty("insurancePolicy")
     private String insurancePolicy;
 
-    // === AUDIT ===
-    // @Column("created_at")
-    // @JsonProperty("createdAt")
-    // private LocalDateTime createdAt;
-
-    // @Column("updated_at")
-    // @JsonProperty("updatedAt")
-    // private LocalDateTime updatedAt;
-
-    @Column("created_by")
-    @JsonProperty("createdBy")
-    private UUID createdBy;
-
-    @Column("updated_by")
-    @JsonProperty("updatedBy")
-    private UUID updatedBy;
-    // @Column("status")
-    // @JsonProperty("status")
-    // private DriverStatus status = DriverStatus.AVAILABLE;
+    // === STATUT DU CHAUFFEUR ===
+    
+    @Column("status")
+    private DriverStatus status = DriverStatus.OFF_DUTY;
 
     @Column("status_updated_at")
-    @JsonProperty("status_updated_at")
     private LocalDateTime statusUpdatedAt;
 
     @Column("status_updated_by")
-    @JsonProperty("status_updated_by")
     private UUID statusUpdatedBy;
 
-   // --- Attributs de Staff ---
-    @Column("employee_id") // Nom de la colonne dans Cassandra
-    @JsonProperty("employeeId")
-    private String employeeId; // ID employé interne à l'organisation
+    // === INFORMATIONS EMPLOYÉ ===
+    
+    @Column("employee_id")
+    private String employeeId;
 
     @Column("department")
-    @JsonProperty("department")
-    private String department; // Service/Département
+    private String department;
 
     @Column("position")
-    @JsonProperty("position")
-    private String position; // Poste/Fonction
+    private String position;
 
-    @Column("staff_status")
-    @JsonProperty("staffStatus")
-    private String staffStatus; // Utiliser une enum (ON_SHIFT, ON_LEAVE, etc.)
+    @Column("hire_date")
+    private LocalDate hireDate;
 
+    @Column("date_of_birth")
+    private LocalDate dateOfBirth;
+
+
+    // === INFORMATIONS FINANCIÈRES ===
+    
     @Column("hourly_rate")
-    @JsonProperty("hourlyRate")
     @CassandraType(type = CassandraType.Name.TEXT)
     private Money hourlyRate;
 
     @Column("working_hours")
-    @JsonProperty("workingHours")
-    @CassandraType(type = CassandraType.Name.TEXT) // On stocke le JSON dans une colonne TEXT
+    @CassandraType(type = CassandraType.Name.TEXT)
     private WorkingHours workingHours;
 
-    @Column("hire_date")
-    @JsonProperty("hireDate")
-    private LocalDate hireDate; // Date d'embauche
+    // === AUDIT TRAIL ===
+    
+    @Column("created_at")
+    private LocalDateTime createdAt;
+
+    @Column("updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column("created_by")
+    private UUID createdBy;
+
+    @Column("updated_by")
+    private UUID updatedBy;
+
+    // === MÉTHODES UTILITAIRES ===
+    
+    /**
+     * Vérifie si le chauffeur est disponible pour une mission
+     */
+    public boolean isAvailable() {
+        return this.status == DriverStatus.AVAILABLE;
+    }
+
+    /**
+     * Vérifie si le chauffeur est en service
+     */
+    public boolean isOnDuty() {
+        return this.status == DriverStatus.ON_DUTY;
+    }
+
+    /**
+     * Vérifie si le chauffeur est hors service
+     */
+    public boolean isOffDuty() {
+        return this.status == DriverStatus.OFF_DUTY;
+    }
+
+    /**
+     * Vérifie si le chauffeur est en congé
+     */
+    public boolean isOnLeave() {
+        return this.status == DriverStatus.ON_LEAVE;
+    }
+
+    /**
+     * Vérifie si le chauffeur peut être assigné à une mission
+     */
+    public boolean canBeAssigned() {
+        return this.status != null && this.status.isAssignable();
+    }
+
+    /**
+     * Vérifie si le chauffeur est prêt à travailler
+     */
+    public boolean isWorkReady() {
+        return this.status != null && this.status.isWorkReady();
+    }
+
+    /**
+     * Vérifie si le permis de conduire est expiré
+     */
+    public boolean isLicenseExpired() {
+        return licenseExpiryDate != null && licenseExpiryDate.isBefore(LocalDate.now());
+    }
+
+    /**
+     * Calcule le nombre de véhicules assignés
+     */
+    public int getAssignedVehicleCount() {
+        return assignedVehicleIds != null ? assignedVehicleIds.size() : 0;
+    }
+
+    /**
+     * Vérifie si le chauffeur a des véhicules assignés
+     */
+    public boolean hasAssignedVehicles() {
+        return assignedVehicleIds != null && !assignedVehicleIds.isEmpty();
+    }
 }
