@@ -59,7 +59,7 @@ public class ApiResponse<T> {
             .build();
     }
 
-    public static Object success(DriverResponse driverDto, String string, HttpStatus created) {
+    public static Object success(Object driverDto, String string, HttpStatus created) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'success'");
     }

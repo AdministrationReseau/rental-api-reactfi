@@ -1,16 +1,10 @@
-// PATH: src/main/java/inc/yowyob/rental_api_reactive/infrastructure/web/dto/DriverResponse.java
-
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import inc.yowyob.rental_api_reactive.application.dto.DriverStatus;
 import inc.yowyob.rental_api_reactive.application.dto.Money;
-// import inc.yowyob.rental_api_reactive.application.dto.DriverStatus;
 import inc.yowyob.rental_api_reactive.application.dto.UserType;
 import inc.yowyob.rental_api_reactive.application.dto.WorkingHours;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -32,7 +26,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DriverResponse {
 
-    // --- IDENTIFIANTS CLÉS ---
+    // === IDENTIFIANTS ===
+    
     @JsonProperty("driver_id")
     private UUID driverId;
 
@@ -45,7 +40,8 @@ public class DriverResponse {
     @JsonProperty("agency_id")
     private UUID agencyId;
 
-    // --- INFORMATIONS PERSONNELLES (de l'entité User) ---
+    // === INFORMATIONS UTILISATEUR (depuis User) ===
+    
     @JsonProperty("first_name")
     private String firstName;
 
@@ -60,18 +56,21 @@ public class DriverResponse {
 
     @JsonProperty("phone")
     private String phone;
-    
+
     @JsonProperty("profile_image_url")
     private String profileImageUrl;
 
     @JsonProperty("user_type")
     private UserType userType;
 
-
-    // --- INFORMATIONS PROFESSIONNELLES (de l'entité Driver) ---
     @JsonProperty("date_of_birth")
     private LocalDate dateOfBirth;
 
+    @JsonProperty("age")
+    private Integer age; // Calculé par le mapper
+
+    // === INFORMATIONS PERMIS ===
+    
     @JsonProperty("license_number")
     private String licenseNumber;
 
@@ -81,108 +80,116 @@ public class DriverResponse {
     @JsonProperty("license_expiry_date")
     private LocalDate licenseExpiryDate;
 
+    @JsonProperty("is_license_expired")
+    private Boolean isLicenseExpired; // Calculé par le mapper
+
     @JsonProperty("experience_years")
     private Integer experienceYears;
 
-    @JsonProperty("rating")
-    private Double rating;
+    // === LOCALISATION ET DOCUMENTS ===
     
-    // @JsonProperty("status")
-    // private DriverStatus status;
+    @JsonProperty("location")
+    private String location;
 
-    // @JsonProperty("is_available")
-    // private Boolean isAvailable;
+    @JsonProperty("id_card_url")
+    private String idCardUrl;
 
-
-    // --- INFORMATIONS D'EMPLOYÉ (de l'entité Driver) ---
-    @JsonProperty("employee_id")
-    private String employeeId; // Matricule
-
-    @JsonProperty("position")
-    private String position;
-
-    @JsonProperty("hire_date")
-    private LocalDate hireDate;
-    
-    @JsonProperty("staff_status")
-    private String staffStatus;
-
-    @JsonProperty("idCardUrl")
-    private String idCardUrl;            // URL or identifier of ID card
-  
-
-    @JsonProperty("licenseExpiry")
-    @NotNull @Future private LocalDate licenseExpiry;
-    
-    @JsonProperty("experience")
-    @NotNull @Min(0) private Integer experience;
-
- 
-    @JsonProperty("driverLicenceUrl")
-    private String driverLicenseUrl;     // URL or identifier of license
-
+    @JsonProperty("driver_license_url")
+    private String driverLicenseUrl;
 
     @JsonProperty("cni")
     private String cni;
 
+    // === VÉHICULES ===
+    
+    @JsonProperty("assigned_vehicle_ids")
+    private List<UUID> assignedVehicleIds;
+
+    @JsonProperty("assigned_vehicle_count")
+    private Integer assignedVehicleCount; // Calculé par le mapper
+
+    @JsonProperty("has_assigned_vehicles")
+    private Boolean hasAssignedVehicles; // Calculé par le mapper
+
+    // === ÉVALUATION ===
+    
+    @JsonProperty("rating")
+    private Double rating;
+
+    // === ASSURANCE ===
+    
+    @JsonProperty("insurance_provider")
+    private String insuranceProvider;
+
+    @JsonProperty("insurance_policy")
+    private String insurancePolicy;
+
+    // === STATUT DU CHAUFFEUR ===
+    
+    @JsonProperty("status")
+    private DriverStatus status;
+
+    @JsonProperty("status_updated_at")
+    private LocalDateTime statusUpdatedAt;
+
+    @JsonProperty("status_updated_by")
+    private UUID statusUpdatedBy;
+
+    // Champs dérivés pour le statut (calculés par le mapper)
+    @JsonProperty("is_available")
+    private Boolean isAvailable;
+
+    @JsonProperty("is_on_duty")
+    private Boolean isOnDuty;
+
+    @JsonProperty("is_off_duty")
+    private Boolean isOffDuty;
+
+    @JsonProperty("is_on_leave")
+    private Boolean isOnLeave;
+
+    @JsonProperty("can_be_assigned")
+    private Boolean canBeAssigned;
+
+    @JsonProperty("is_work_ready")
+    private Boolean isWorkReady;
+
+    // === INFORMATIONS EMPLOYÉ ===
+    
+    @JsonProperty("employee_id")
+    private String employeeId;
+
+    @JsonProperty("position")
+    private String position;
 
     @JsonProperty("department")
     private String department;
 
+    @JsonProperty("hire_date")
+    private LocalDate hireDate;
 
-    @JsonProperty("hourlyRate")
+    @JsonProperty("years_of_service")
+    private Integer yearsOfService; // Calculé par le mapper
+
+    // === INFORMATIONS FINANCIÈRES ===
+    
+    @JsonProperty("hourly_rate")
     private Money hourlyRate;
 
-    @JsonProperty("workingHours")
+    @JsonProperty("working_hours")
     private WorkingHours workingHours;
 
-    // --- CHAMPS CALCULÉS (pour la commodité du frontend) ---
-    /**
-     * Calcule l'âge actuel du chauffeur. Non stocké en base.
-     */
-    @JsonProperty("age")
-    public Integer getAge() {
-        if (this.dateOfBirth == null) {
-            return null;
-        }
-        return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
-    }
+    // === AUDIT TRAIL ===
     
-    private int age = getAge();
-
-    /**
-     * Calcule le nombre d'années de service. Non stocké en base.
-     */
-    @JsonProperty("yearsOfService")
-    public Integer getYearsOfService() {
-        if (this.hireDate == null) {
-            return null;
-        }
-        return Period.between(this.hireDate, LocalDate.now()).getYears();
-    }
-    private int yearsOfService = getYearsOfService();
-
-    
-    /**
-     * Vérifie si le permis de conduire a expiré. Non stocké en base.
-     */
-    @JsonProperty("isLicenseExpired")
-    public Boolean getIsLicenseExpired() {
-        if (this.licenseExpiryDate == null) {
-            return null; // ou false si une licence sans date d'expiration est considérée comme valide
-        }
-        return LocalDate.now().isAfter(this.licenseExpiryDate);
-    }
-    private boolean isLicenseExpired = getIsLicenseExpired();
-
-    
-
-    // --- AUDIT ---
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
 
     @JsonProperty("updated_at")
     private LocalDateTime updatedAt;
 
-    
+    @JsonProperty("created_by")
+    private UUID createdBy;
+
+    @JsonProperty("updated_by")
+    private UUID updatedBy;
 }
