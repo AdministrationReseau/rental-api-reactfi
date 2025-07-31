@@ -150,7 +150,7 @@ public interface DriverMapper {
     @Mapping(target = "hasAssignedVehicles", expression = "java(driver.hasAssignedVehicles())")
     
     // Calculs d'âge et ancienneté (si dateOfBirth disponible via User)
-    @Mapping(target = "age", expression = "java(user != null && user.getDateOfBirth() != null ? java.time.Period.between(user.getDateOfBirth(), java.time.LocalDate.now()).getYears() : null)")
+    // @Mapping(target = "age", expression = "java(user != null && user.getDateOfBirth() != null ? java.time.Period.between(user.getDateOfBirth(), java.time.LocalDate.now()).getYears() : null)")
     @Mapping(target = "yearsOfService", expression = "java(driver.getHireDate() != null ? java.time.Period.between(driver.getHireDate(), java.time.LocalDate.now()).getYears() : null)")
     
     DriverResponse toResponse(Driver driver, User user);
