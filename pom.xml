@@ -24,6 +24,7 @@
         <jjwt.version>0.12.5</jjwt.version>
         <springdoc.version>2.5.0</springdoc.version>
         <cassandra.version>4.18.1</cassandra.version>
+        <lombok.version>1.18.32</lombok.version>
         <testcontainers.version>1.19.8</testcontainers.version>
         <reactor-test.version>3.6.0</reactor-test.version>
         <reactor-core.version>3.6.0</reactor-core.version>

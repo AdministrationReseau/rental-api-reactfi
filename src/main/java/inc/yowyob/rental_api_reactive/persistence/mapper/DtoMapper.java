@@ -38,15 +38,15 @@ public class DtoMapper {
             .userType(user.getUserType());
 
         // Super admin voit tout
-        if (user.getUserType() == inc.yowyob.rental_api_reactive.application.dto.UserType.SUPER_ADMIN) {
+        if (user.getUserType() == inc.yowyob.rental_api_reactive.application.dto.user.UserType.SUPER_ADMIN) {
             builder.isGlobalAccess(true);
         } else {
             builder.organizationId(user.getOrganizationId());
 
             // Si l'utilisateur est lié à une agence spécifique
             if (user.getAgencyId() != null &&
-                (user.getUserType() == inc.yowyob.rental_api_reactive.application.dto.UserType.AGENCY_MANAGER ||
-                    user.getUserType() == inc.yowyob.rental_api_reactive.application.dto.UserType.RENTAL_AGENT)) {
+                (user.getUserType() == inc.yowyob.rental_api_reactive.application.dto.user.UserType.AGENCY_MANAGER ||
+                    user.getUserType() == inc.yowyob.rental_api_reactive.application.dto.user.UserType.RENTAL_AGENT)) {
                 builder.agencyId(user.getAgencyId());
                 builder.isAgencyRestricted(true);
             }

@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.OrganizationType;
+
+import inc.yowyob.rental_api_reactive.application.dto.organization.OrganizationType;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.UUID;

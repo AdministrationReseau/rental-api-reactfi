@@ -1,7 +1,7 @@
 package inc.yowyob.rental_api_reactive.infrastructure.security.config;
 
 import inc.yowyob.rental_api_reactive.infrastructure.security.jwt.JwtReactiveTokenProvider;
-import inc.yowyob.rental_api_reactive.persistence.repository.UserReactiveRepository;
+import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;

@@ -1,9 +1,9 @@
 package inc.yowyob.rental_api_reactive.infrastructure.config;
 
-import inc.yowyob.rental_api_reactive.application.dto.Permission;
-import inc.yowyob.rental_api_reactive.application.dto.RoleType;
+import inc.yowyob.rental_api_reactive.application.dto.user.Permission;
+import inc.yowyob.rental_api_reactive.application.dto.user.RoleType;
 import inc.yowyob.rental_api_reactive.persistence.entity.Role;
-import inc.yowyob.rental_api_reactive.persistence.repository.RoleReactiveRepository;
+import inc.yowyob.rental_api_reactive.persistence.repository.user.RoleReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

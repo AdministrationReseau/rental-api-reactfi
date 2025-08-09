@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.VehicleStatus;
+
+import inc.yowyob.rental_api_reactive.application.dto.vehicle.VehicleStatus;
 import lombok.*;
 
 import jakarta.validation.constraints.*;

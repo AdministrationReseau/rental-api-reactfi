@@ -1,8 +1,9 @@
 package inc.yowyob.rental_api_reactive.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.SubscriptionStatus;
-import inc.yowyob.rental_api_reactive.application.dto.PaymentMethod;
+
+import inc.yowyob.rental_api_reactive.application.dto.payment.PaymentMethod;
+import inc.yowyob.rental_api_reactive.application.dto.subscription.SubscriptionStatus;
 import lombok.*;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;

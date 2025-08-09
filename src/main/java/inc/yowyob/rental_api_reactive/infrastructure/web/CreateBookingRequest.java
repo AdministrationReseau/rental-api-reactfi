@@ -1,12 +1,13 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import inc.yowyob.rental_api_reactive.application.dto.util.Money;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import inc.yowyob.rental_api_reactive.application.dto.Money;
 
 @Data
 public class CreateBookingRequest {

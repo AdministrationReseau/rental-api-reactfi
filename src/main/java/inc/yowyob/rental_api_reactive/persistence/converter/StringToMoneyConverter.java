@@ -1,9 +1,11 @@
 package inc.yowyob.rental_api_reactive.persistence.converter;
 
-import inc.yowyob.rental_api_reactive.application.dto.Money;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.lang.NonNull;
+
+import inc.yowyob.rental_api_reactive.application.dto.util.Money;
+
 import java.math.BigDecimal;
 
 @ReadingConverter // Indique que ce convertisseur sert pour la lecture depuis la BDD

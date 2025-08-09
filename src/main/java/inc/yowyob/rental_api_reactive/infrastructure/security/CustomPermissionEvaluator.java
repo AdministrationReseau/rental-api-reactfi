@@ -1,11 +1,12 @@
 package inc.yowyob.rental_api_reactive.infrastructure.security;
 
-import inc.yowyob.rental_api_reactive.application.service.AuthorizationReactiveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
+import inc.yowyob.rental_api_reactive.application.service.auth.AuthorizationReactiveService;
 
 import java.io.Serializable;
 import java.util.UUID;

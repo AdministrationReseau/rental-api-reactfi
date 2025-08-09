@@ -1,9 +1,8 @@
 package inc.yowyob.rental_api_reactive.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.DriverStatus;
-import inc.yowyob.rental_api_reactive.application.dto.Money;
-import inc.yowyob.rental_api_reactive.application.dto.WorkingHours;
+import inc.yowyob.rental_api_reactive.application.dto.driver.DriverStatus;
+import inc.yowyob.rental_api_reactive.application.dto.util.Money;
+import inc.yowyob.rental_api_reactive.application.dto.util.WorkingHours;
 import lombok.*;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
@@ -69,6 +68,7 @@ public class Driver {
     private List<UUID> assignedVehicleIds;
 
     @Column("rating")
+    @Builder.Default
     private Double rating = 0.0;
 
     // === ASSURANCE ===
@@ -82,6 +82,7 @@ public class Driver {
     // === STATUT DU CHAUFFEUR ===
     
     @Column("status")
+    @Builder.Default
     private DriverStatus status = DriverStatus.OFF_DUTY;
 
     @Column("status_updated_at")

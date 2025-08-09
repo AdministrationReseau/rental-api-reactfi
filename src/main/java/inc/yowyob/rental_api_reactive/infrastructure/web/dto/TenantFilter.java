@@ -1,10 +1,9 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.UserType;
+
+import inc.yowyob.rental_api_reactive.application.dto.user.UserType;
 import lombok.*;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -28,8 +27,10 @@ public class TenantFilter {
     private UUID agencyId;
 
     @JsonProperty("is_global_access")
+    @Builder.Default
     private Boolean isGlobalAccess = false;
 
     @JsonProperty("is_agency_restricted")
+    @Builder.Default
     private Boolean isAgencyRestricted = false;
 }

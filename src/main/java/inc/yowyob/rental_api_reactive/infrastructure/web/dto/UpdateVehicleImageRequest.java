@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.ImageType;
+
+import inc.yowyob.rental_api_reactive.application.dto.util.ImageType;
 import lombok.*;
 
 /**

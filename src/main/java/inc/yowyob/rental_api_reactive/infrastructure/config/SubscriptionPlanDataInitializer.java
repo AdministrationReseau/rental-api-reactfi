@@ -1,7 +1,7 @@
 package inc.yowyob.rental_api_reactive.infrastructure.config;
 
 import inc.yowyob.rental_api_reactive.persistence.entity.SubscriptionPlan;
-import inc.yowyob.rental_api_reactive.persistence.repository.SubscriptionPlanReactiveRepository;
+import inc.yowyob.rental_api_reactive.persistence.repository.subscription.SubscriptionPlanReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

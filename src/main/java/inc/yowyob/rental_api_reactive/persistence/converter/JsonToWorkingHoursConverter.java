@@ -3,7 +3,9 @@ package inc.yowyob.rental_api_reactive.persistence.converter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import inc.yowyob.rental_api_reactive.application.dto.WorkingHours; // Assurez-vous que le chemin est correct
+
+import inc.yowyob.rental_api_reactive.application.dto.util.WorkingHours;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.lang.NonNull;

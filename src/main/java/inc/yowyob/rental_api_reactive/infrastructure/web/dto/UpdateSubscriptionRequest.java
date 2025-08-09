@@ -24,5 +24,6 @@ public class UpdateSubscriptionRequest {
     private LocalDateTime expiresAt;
 
     @JsonProperty("auto_renew")
+    @Builder.Default
     private Boolean autoRenew = true;
 }

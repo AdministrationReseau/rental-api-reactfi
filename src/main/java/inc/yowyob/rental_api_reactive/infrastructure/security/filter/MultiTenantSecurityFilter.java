@@ -1,6 +1,6 @@
 package inc.yowyob.rental_api_reactive.infrastructure.security.filter;
 
-import inc.yowyob.rental_api_reactive.application.service.AuthorizationReactiveService;
+import inc.yowyob.rental_api_reactive.application.service.auth.AuthorizationReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

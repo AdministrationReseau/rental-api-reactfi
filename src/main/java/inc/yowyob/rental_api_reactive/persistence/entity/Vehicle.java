@@ -1,7 +1,10 @@
 package inc.yowyob.rental_api_reactive.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.*;
+import inc.yowyob.rental_api_reactive.application.dto.vehicle.FuelType;
+import inc.yowyob.rental_api_reactive.application.dto.vehicle.TransmissionType;
+import inc.yowyob.rental_api_reactive.application.dto.vehicle.VehicleStatus;
+import inc.yowyob.rental_api_reactive.application.dto.vehicle.VehicleType;
 import lombok.*;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;

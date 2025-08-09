@@ -23,7 +23,7 @@ public class SubscriptionResponse {
     private UUID subscriptionPlanId;
 
     @JsonProperty("status")
-    private inc.yowyob.rental_api_reactive.application.dto.SubscriptionStatus status;
+    private inc.yowyob.rental_api_reactive.application.dto.subscription.SubscriptionStatus status;
 
     @JsonProperty("start_date")
     private LocalDateTime startDate;

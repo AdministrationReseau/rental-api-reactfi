@@ -41,6 +41,7 @@ public class CreateAgencyRequest {
 
     @Size(max = 100, message = "Country must not exceed 100 characters")
     @JsonProperty("country")
+    @Builder.Default
     private String country = "CM";
 
     @Size(max = 20, message = "Postal code must not exceed 20 characters")
@@ -80,15 +81,19 @@ public class CreateAgencyRequest {
 
     // === CONFIGURATION ===
     @JsonProperty("is_24_hours")
+    @Builder.Default
     private Boolean is24Hours = false;
 
     @JsonProperty("timezone")
+    @Builder.Default
     private String timezone = "Africa/Douala";
 
     @JsonProperty("currency")
+    @Builder.Default
     private String currency = "XAF";
 
     @JsonProperty("language")
+    @Builder.Default
     private String language = "fr";
 
     // === HORAIRES DE TRAVAIL ===

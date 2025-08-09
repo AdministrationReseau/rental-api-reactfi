@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.security;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.UserType;
+
+import inc.yowyob.rental_api_reactive.application.dto.user.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

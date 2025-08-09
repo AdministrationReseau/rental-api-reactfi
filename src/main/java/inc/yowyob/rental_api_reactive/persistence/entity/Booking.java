@@ -2,7 +2,7 @@ package inc.yowyob.rental_api_reactive.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import inc.yowyob.rental_api_reactive.application.dto.BookingStatus;
+import inc.yowyob.rental_api_reactive.application.dto.booking.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

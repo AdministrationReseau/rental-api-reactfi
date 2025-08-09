@@ -15,7 +15,7 @@ public class OnboardingOrganizationRequest {
     private String name;
 
     @JsonProperty("organization_type")
-    private inc.yowyob.rental_api_reactive.application.dto.OrganizationType organizationType;
+    private inc.yowyob.rental_api_reactive.application.dto.organization.OrganizationType organizationType;
 
     @JsonProperty("description")
     private String description;

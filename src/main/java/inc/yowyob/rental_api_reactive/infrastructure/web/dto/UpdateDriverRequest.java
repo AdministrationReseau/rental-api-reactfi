@@ -1,9 +1,10 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.DriverStatus;
-import inc.yowyob.rental_api_reactive.application.dto.Money;
-import inc.yowyob.rental_api_reactive.application.dto.WorkingHours;
+
+import inc.yowyob.rental_api_reactive.application.dto.driver.DriverStatus;
+import inc.yowyob.rental_api_reactive.application.dto.util.Money;
+import inc.yowyob.rental_api_reactive.application.dto.util.WorkingHours;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 

@@ -13,6 +13,7 @@ import lombok.*;
 public class WorkingHoursInfo {
 
     @JsonProperty("is_open")
+    @Builder.Default
     private Boolean isOpen = true;
 
     @JsonProperty("open_time")

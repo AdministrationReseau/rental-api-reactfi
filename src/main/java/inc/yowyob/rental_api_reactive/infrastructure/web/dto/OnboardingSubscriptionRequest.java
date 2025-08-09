@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.PaymentMethod;
+
+import inc.yowyob.rental_api_reactive.application.dto.payment.PaymentMethod;
 import lombok.*;
 import java.util.UUID;
 

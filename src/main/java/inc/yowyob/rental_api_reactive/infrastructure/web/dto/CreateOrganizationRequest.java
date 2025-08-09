@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.application.dto.OrganizationType;
+
+import inc.yowyob.rental_api_reactive.application.dto.organization.OrganizationType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import java.util.UUID;
@@ -52,6 +53,7 @@ public class CreateOrganizationRequest {
     private String city;
 
     @JsonProperty("country")
+    @Builder.Default
     private String country = "CM";
 
     @JsonProperty("postal_code")
@@ -74,19 +76,24 @@ public class CreateOrganizationRequest {
 
     // === CONFIGURATION ===
     @JsonProperty("currency")
+    @Builder.Default
     private String currency = "XAF";
 
     @JsonProperty("timezone")
+    @Builder.Default
     private String timezone = "Africa/Douala";
 
     @JsonProperty("language")
+    @Builder.Default
     private String language = "fr";
 
     // === BRANDING ===
     @JsonProperty("primary_color")
+    @Builder.Default
     private String primaryColor = "#3b82f6";
 
     @JsonProperty("secondary_color")
+    @Builder.Default
     private String secondaryColor = "#1e40af";
 
     // === POLITIQUES ET PARAMÈTRES ===
