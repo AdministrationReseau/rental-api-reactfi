@@ -7,7 +7,7 @@ services:
     scylladb:
         image: scylladb/scylla:5.2
         # container_name: rental-scylladb
-        container_name: containerrental
+        container_name: rental-scylla
         restart: unless-stopped
         command: --seeds=scylladb --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
         ports:

@@ -18,9 +18,16 @@ import java.util.Map;
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
     uses = {ObjectMapper.class})
 public abstract class AgencyMapper {
-
     @Autowired
-    private ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
+
+    public Map<String, Object> jsonToMap(String json) {
+        try {
+            return objectMapper.readValue(json, new TypeReference<Map<String, Object>>() {});
+        } catch (JsonProcessingException e) {
+            return Collections.emptyMap();
+        }
+    }
 
     @Mapping(target = "fullAddress", expression = "java(agency.getFullAddress())")
     @Mapping(target = "hasLocation", expression = "java(agency.hasLocation())")

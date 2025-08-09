@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Personal files
+dump.py
+dump.txt

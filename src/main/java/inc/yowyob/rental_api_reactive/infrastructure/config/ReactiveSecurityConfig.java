@@ -29,13 +29,19 @@ public class ReactiveSecurityConfig {
     private final ReactiveSecurityContextRepository securityContextRepository;
     private final AppProperties appProperties;
 
-    // ✅ DÉFINISSONS UNE LISTE PROPRE POUR LES CHEMINS SWAGGER
-    // private static final String[] SWAGGER_PATHS = {
-    //     "/api/v1/swagger-ui.html",
-    //     "/api/v1/swagger-ui/**",
-    //     "/api/v1/v3/api-docs/**",
-    //     "/webjars/**" // Les webjars sont souvent servis à la racine, on garde ce chemin par sécurité
-    // };
+    private static final String[] PUBLIC_PATHS = {
+        "/swagger-ui.html",
+        "/swagger-ui/**",
+        "/v3/api-docs/**",
+        "/webjars/**",
+        "/swagger-resources/**",
+        "/favicon.ico", // Important pour les requêtes de navigateur
+        "/actuator/**",
+        "/health",
+        "/api/v1/auth/**",
+        "/api/v1/onboarding/**",
+        "/api/v1/subscription/plans/**"
+    };
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,74 +51,19 @@ public class ReactiveSecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
-            // Configuration CORS
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
-            // Désactiver CSRF pour API REST
             .csrf(ServerHttpSecurity.CsrfSpec::disable)
-
-            // Désactiver l'authentification HTTP Basic
             .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
-
-            // Désactiver les formulaires de login
             .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
-
-            // Configuration des autorisations
             .authorizeExchange(exchanges -> exchanges
-                // .pathMatchers(SWAGGER_PATHS).permitAll()
-                .pathMatchers("/v3/api-docs/**").permitAll()
-                .pathMatchers("/swagger-ui/**").permitAll()
-                .pathMatchers("/swagger-ui.html").permitAll()
-                .pathMatchers("/swagger-resources/**").permitAll()
-                .pathMatchers("/webjars/**").permitAll()
-
-                // Health checks et actuator
-                .pathMatchers("/actuator/**").permitAll()
-                .pathMatchers("/health").permitAll()
-
-                // Routes publiques - Authentification
-                .pathMatchers("/api/v1/auth/register").permitAll()
-                .pathMatchers("/api/v1/auth/login").permitAll()
-                .pathMatchers("/api/v1/auth/refresh").permitAll()
-                .pathMatchers("/api/v1/auth/forgot-password").permitAll()
-                .pathMatchers("/api/v1/auth/reset-password").permitAll()
-                .pathMatchers("/api/v1/auth/verify-email").permitAll()
-
-                // Routes publiques - Onboarding
-                .pathMatchers("/api/v1/onboarding/**").permitAll()
-
-                // Routes publiques - Forfaits (consultation uniquement)
-                .pathMatchers("/api/v1/subscription/plans/**").permitAll()
-
-                // Routes sécurisées - Authentification
-                .pathMatchers("/api/v1/auth/me").authenticated()
-                .pathMatchers("/api/v1/auth/change-password").authenticated()
-                .pathMatchers("/api/v1/auth/logout").authenticated()
-
-                // Routes sécurisées - Profil utilisateur
+                .pathMatchers(PUBLIC_PATHS).permitAll()
                 .pathMatchers("/api/v1/profile/**").authenticated()
-
-                // Gestion du personnel (Propriétaires d'organisation uniquement)
                 .pathMatchers("/api/v1/personnel/**").authenticated()
-
-                // À sécuriser dans les phases suivantes
-                .pathMatchers("/api/v1/users/**").permitAll()
-                .pathMatchers("/api/v1/drivers/**").permitAll()
-                .pathMatchers("/api/v1/organizations/**").permitAll()
-                .pathMatchers("/api/v1/permissions").permitAll()
-                .pathMatchers("/api/v1/roles").permitAll()
-                .pathMatchers("/api/v1/user-roles").permitAll()
-
                 // Toutes les autres routes nécessitent une authentification
                 .anyExchange().authenticated()
             )
-
-            // Configuration du gestionnaire d'authentification
             .authenticationManager(customAuthenticationManager)
-
-            // Configuration du repository de contexte de sécurité
             .securityContextRepository(securityContextRepository)
-
             .build();
     }
 

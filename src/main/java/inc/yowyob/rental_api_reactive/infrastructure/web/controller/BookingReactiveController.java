@@ -46,19 +46,17 @@ public class BookingReactiveController {
                 createRequest.getTotalPrice()
         )
         .map(bookingDto -> {
-            // Spécifiez explicitement le type de retour
-            BookingResponse bookingResponse = // Créer BookingResponse à partir de bookingDto  (Utiliser le mapper si nécessaire)
-                    // Exemple:
-                    BookingResponse response = new BookingResponse();
-                    response.setId(bookingDto.getId());
-                    response.setVehicleId(bookingDto.getVehicleId());
-                    response.setUserId(bookingDto.getUserId());
-                    response.setStartDate(bookingDto.getStartDate());
-                    response.setEndDate(bookingDto.getEndDate());
-                    response.setWithDriver(bookingDto.isWithDriver());
-                    response.setTotalPrice(bookingDto.getTotalPrice());
-                    response.setStatus(bookingDto.getStatus());
-                    response.setCreatedAt(bookingDto.getCreatedAt());
+            BookingResponse response = new BookingResponse();
+            response.setId(bookingDto.getId());
+            response.setVehicleId(bookingDto.getVehicleId());
+            response.setUserId(bookingDto.getUserId());
+            response.setStartDate(bookingDto.getStartDate());
+            response.setEndDate(bookingDto.getEndDate());
+            response.setWithDriver(bookingDto.isWithDriver());
+            response.setTotalPrice(bookingDto.getTotalPrice());
+            response.setStatus(bookingDto.getStatus());
+            response.setCreatedAt(bookingDto.getCreatedAt());
+
             return ApiResponse.<BookingResponse>builder()
                     .success(true)
                     .message("Réservation créée avec succès")
@@ -78,19 +76,17 @@ public class BookingReactiveController {
 
         return bookingService.getBookingById(bookingId)
             .map(bookingDto -> {
-                // Spécifiez explicitement le type de retour
-                BookingResponse bookingResponse = // Créer BookingResponse à partir de bookingDto (Utiliser le mapper si nécessaire)
-                        // Exemple:
-                        BookingResponse response = new BookingResponse();
-                        response.setId(bookingDto.getId());
-                        response.setVehicleId(bookingDto.getVehicleId());
-                        response.setUserId(bookingDto.getUserId());
-                        response.setStartDate(bookingDto.getStartDate());
-                        response.setEndDate(bookingDto.getEndDate());
-                        response.setWithDriver(bookingDto.isWithDriver());
-                        response.setTotalPrice(bookingDto.getTotalPrice());
-                        response.setStatus(bookingDto.getStatus());
-                        response.setCreatedAt(bookingDto.getCreatedAt());
+                BookingResponse response = new BookingResponse();
+                response.setId(bookingDto.getId());
+                response.setVehicleId(bookingDto.getVehicleId());
+                response.setUserId(bookingDto.getUserId());
+                response.setStartDate(bookingDto.getStartDate());
+                response.setEndDate(bookingDto.getEndDate());
+                response.setWithDriver(bookingDto.isWithDriver());
+                response.setTotalPrice(bookingDto.getTotalPrice());
+                response.setStatus(bookingDto.getStatus());
+                response.setCreatedAt(bookingDto.getCreatedAt());
+                
                 return ApiResponse.<BookingResponse>builder()
                     .success(true)
                     .message("Réservation trouvée avec succès")
@@ -116,19 +112,17 @@ public class BookingReactiveController {
 
         return bookingService.confirmBooking(bookingId)
             .map(bookingDto -> {
-                // Spécifiez explicitement le type de retour
-                BookingResponse bookingResponse = // Créer BookingResponse à partir de bookingDto (Utiliser le mapper si nécessaire)
-                        // Exemple:
-                        BookingResponse response = new BookingResponse();
-                        response.setId(bookingDto.getId());
-                        response.setVehicleId(bookingDto.getVehicleId());
-                        response.setUserId(bookingDto.getUserId());
-                        response.setStartDate(bookingDto.getStartDate());
-                        response.setEndDate(bookingDto.getEndDate());
-                        response.setWithDriver(bookingDto.isWithDriver());
-                        response.setTotalPrice(bookingDto.getTotalPrice());
-                        response.setStatus(bookingDto.getStatus());
-                        response.setCreatedAt(bookingDto.getCreatedAt());
+                BookingResponse response = new BookingResponse();
+                response.setId(bookingDto.getId());
+                response.setVehicleId(bookingDto.getVehicleId());
+                response.setUserId(bookingDto.getUserId());
+                response.setStartDate(bookingDto.getStartDate());
+                response.setEndDate(bookingDto.getEndDate());
+                response.setWithDriver(bookingDto.isWithDriver());
+                response.setTotalPrice(bookingDto.getTotalPrice());
+                response.setStatus(bookingDto.getStatus());
+                response.setCreatedAt(bookingDto.getCreatedAt());
+                
                 return ApiResponse.<BookingResponse>builder()
                     .success(true)
                     .message("Réservation confirmée avec succès")

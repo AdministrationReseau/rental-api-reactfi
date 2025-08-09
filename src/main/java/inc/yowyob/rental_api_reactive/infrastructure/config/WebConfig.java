@@ -82,31 +82,15 @@ public class WebConfig implements WebFluxConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Servir tous les fichiers uploadés
+        // Obtenir le chemin absolu et le normaliser
+        String absoluteUploadDir = new java.io.File(uploadDir).getAbsolutePath();
+        
+        // Servir les fichiers uploadés depuis le dossier `uploads`
         registry.addResourceHandler("/uploads/**")
-            .addResourceLocations("file:" + uploadDir + "/");
+            .addResourceLocations("file:" + absoluteUploadDir + "/");
 
-        // Servir spécifiquement les images de véhicules
-        registry.addResourceHandler("/api/v1/files/vehicles/**")
-            .addResourceLocations("file:" + uploadDir + "/images/vehicles/");
-
-        // Servir spécifiquement les images de chauffeurs
-        registry.addResourceHandler("/api/v1/files/drivers/**")
-            .addResourceLocations("file:" + uploadDir + "/images/drivers/");
-
-        // Servir spécifiquement les images d'utilisateurs
-        registry.addResourceHandler("/api/v1/files/users/**")
-            .addResourceLocations("file:" + uploadDir + "/images/users/");
-
-        // Servir les documents
-        registry.addResourceHandler("/api/v1/files/documents/**")
-            .addResourceLocations("file:" + uploadDir + "/files/documents/");
-
-        // Configuration pour Swagger UI et autres ressources statiques
-        registry.addResourceHandler("/webjars/**")
-            .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
-        registry.addResourceHandler("/swagger-ui/**")
-            .addResourceLocations("classpath:/META-INF/resources/webjars/swagger-ui/");
+        // Servir les ressources statiques depuis le classpath (pour le favicon par exemple)
+        registry.addResourceHandler("/**")
+            .addResourceLocations("classpath:/static/");
     }
 }

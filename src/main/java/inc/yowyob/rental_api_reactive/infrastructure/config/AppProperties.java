@@ -69,6 +69,9 @@ public class AppProperties {
 
     @Data
     public static class Security {
+        @JsonProperty("image-encryption-key")
+        private String imageEncryptionKey = "DefaultEncryptionKeyThatIsVeryLongAndSecure123";
+
         @JsonProperty("maxFailedAttempts")
         private int maxFailedAttempts = 5;
 

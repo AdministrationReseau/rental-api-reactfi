@@ -276,7 +276,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -329,7 +329,6 @@
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${mapstruct.version}</version>
-                             <scope>provided</scope>
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>

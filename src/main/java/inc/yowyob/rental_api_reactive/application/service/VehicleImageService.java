@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import inc.yowyob.rental_api_reactive.infrastructure.config.AppProperties;
 import reactor.core.publisher.Mono;
 
 import javax.crypto.Cipher;
@@ -22,6 +24,12 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class VehicleImageService {
+    private final AppProperties appProperties;
+
+    // For futher use
+    private SecretKeySpec getSecretKeySpec() {
+        return new SecretKeySpec(appProperties.getSecurity().getImageEncryptionKey().getBytes(), "AES");
+    }
 
     @Value("${app.file.upload-dir:./uploads}")
     private String uploadDir;

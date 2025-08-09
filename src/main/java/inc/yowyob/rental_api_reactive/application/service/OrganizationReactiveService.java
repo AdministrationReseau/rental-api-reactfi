@@ -9,6 +9,10 @@ import inc.yowyob.rental_api_reactive.application.dto.OrganizationType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -26,6 +30,7 @@ public class OrganizationReactiveService {
     private final OrganizationReactiveRepository organizationRepository;
     private final AgencyReactiveRepository agencyRepository;
     private final OrganizationMapper organizationMapper;
+    private final ObjectMapper objectMapper;
     private final MultiTenantReactiveService multiTenantService;
     private final SubscriptionValidationReactiveService subscriptionValidationService;
 
@@ -485,7 +490,11 @@ public class OrganizationReactiveService {
      * Convertit un objet en JSON
      */
     private String convertToJson(Object object) {
-        // TODO: Implémenter la conversion JSON avec ObjectMapper
-        return "{}"; // Placeholder
+        try {
+            return objectMapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            log.error("Error converting working hours to JSON", e);
+            return "{}"; // Placeholder
+        }
     }
 }

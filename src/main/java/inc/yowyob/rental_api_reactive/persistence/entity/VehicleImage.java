@@ -19,7 +19,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table("vehicle_images")
 public class VehicleImage {
-
     @PrimaryKey
     @JsonProperty("id")
     private UUID id;
