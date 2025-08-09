@@ -32,8 +32,8 @@ public class BookingReactiveController {
     @PreAuthorize("hasAuthority('RENTAL_WRITE')")
     @Operation(summary = "Créer une nouvelle réservation", description = "Crée une nouvelle réservation")
     public Mono<ApiResponse<BookingResponse>> createBooking(
-        @Valid @RequestBody CreateBookingRequest createRequest,
-        @Parameter(hidden = true) @RequestHeader("X-User-Id") String userId
+            @Valid @RequestBody CreateBookingRequest createRequest,
+            @Parameter(hidden = true) @RequestHeader("X-User-Id") String userId
     ) {
         log.info("POST /api/v1/bookings - Creating booking for vehicle: {}", createRequest.getVehicleId());
 
@@ -46,26 +46,19 @@ public class BookingReactiveController {
                 createRequest.getTotalPrice()
         )
         .map(bookingDto -> {
-            BookingResponse response = new BookingResponse();
-            response.setId(bookingDto.getId());
-            response.setVehicleId(bookingDto.getVehicleId());
-            response.setUserId(bookingDto.getUserId());
-            response.setStartDate(bookingDto.getStartDate());
-            response.setEndDate(bookingDto.getEndDate());
-            response.setWithDriver(bookingDto.isWithDriver());
-            response.setTotalPrice(bookingDto.getTotalPrice());
-            response.setStatus(bookingDto.getStatus());
-            response.setCreatedAt(bookingDto.getCreatedAt());
+            // Utiliser le mapper pour créer BookingResponse
+            BookingResponse bookingResponse = bookingResponseMapper.toResponse(bookingDto);
 
             return ApiResponse.<BookingResponse>builder()
                     .success(true)
                     .message("Réservation créée avec succès")
-                    .data(response)
+                    .data(bookingResponse)
                     .build();
         })
         .doOnSuccess(response -> log.info("Booking created successfully: {}", response.getData().getId()))
         .doOnError(error -> log.error("Failed to create booking", error));
     }
+    
     @GetMapping(value = "/{bookingId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasAuthority('RENTAL_READ')")
     @Operation(summary = "Obtenir une réservation par ID", description = "Récupère les détails d'une réservation")
@@ -76,21 +69,13 @@ public class BookingReactiveController {
 
         return bookingService.getBookingById(bookingId)
             .map(bookingDto -> {
-                BookingResponse response = new BookingResponse();
-                response.setId(bookingDto.getId());
-                response.setVehicleId(bookingDto.getVehicleId());
-                response.setUserId(bookingDto.getUserId());
-                response.setStartDate(bookingDto.getStartDate());
-                response.setEndDate(bookingDto.getEndDate());
-                response.setWithDriver(bookingDto.isWithDriver());
-                response.setTotalPrice(bookingDto.getTotalPrice());
-                response.setStatus(bookingDto.getStatus());
-                response.setCreatedAt(bookingDto.getCreatedAt());
-                
+                // Utiliser le mapper pour créer BookingResponse
+                BookingResponse bookingResponse = bookingResponseMapper.toResponse(bookingDto);
+
                 return ApiResponse.<BookingResponse>builder()
                     .success(true)
                     .message("Réservation trouvée avec succès")
-                    .data(response)
+                    .data(bookingResponse)
                     .build();
             })
             .switchIfEmpty(Mono.just(ApiResponse.<BookingResponse>builder()
@@ -112,21 +97,13 @@ public class BookingReactiveController {
 
         return bookingService.confirmBooking(bookingId)
             .map(bookingDto -> {
-                BookingResponse response = new BookingResponse();
-                response.setId(bookingDto.getId());
-                response.setVehicleId(bookingDto.getVehicleId());
-                response.setUserId(bookingDto.getUserId());
-                response.setStartDate(bookingDto.getStartDate());
-                response.setEndDate(bookingDto.getEndDate());
-                response.setWithDriver(bookingDto.isWithDriver());
-                response.setTotalPrice(bookingDto.getTotalPrice());
-                response.setStatus(bookingDto.getStatus());
-                response.setCreatedAt(bookingDto.getCreatedAt());
-                
+                // Utiliser le mapper pour créer BookingResponse
+                BookingResponse bookingResponse = bookingResponseMapper.toResponse(bookingDto);
+
                 return ApiResponse.<BookingResponse>builder()
                     .success(true)
                     .message("Réservation confirmée avec succès")
-                    .data(response)
+                    .data(bookingResponse)
                     .build();
             })
             .switchIfEmpty(Mono.just(ApiResponse.<BookingResponse>builder()
