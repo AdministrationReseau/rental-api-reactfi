@@ -3,6 +3,8 @@ package inc.yowyob.rental_api_reactive.application.service.booking;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;
@@ -79,5 +81,65 @@ public class BookingReactiveService {
                return bookingRepository.save(booking).then();
            })
            .doOnSuccess(unused -> log.info("Booking cancelled with id {}", bookingId));
+    }
+
+     public Flux<BookingDTO> getAllBookings() {
+        //  Implémentez la logique pour récupérer toutes les réservations.
+        log.info("Getting all bookings");
+        return bookingRepository.findAll()
+            .map(bookingMapper::toDto)
+            .doOnNext(booking -> log.debug("Found booking: {}", booking.getId()));
+    }
+
+    public Flux<BookingDTO> getBookingsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        // Implémentez la logique pour récupérer les réservations dans l'intervalle de dates.
+        log.info("Getting bookings between {} and {}", startDate, endDate);
+        //  Exemple (à adapter) :
+        // return bookingRepository.findByDateRange(startDate, endDate)
+        //       .map(bookingMapper::toDto);
+        return null; // Remplacer par l'implémentation réelle
+    }
+
+    public Flux<BookingDTO> getBookingsByStatus(BookingStatus status) {
+        //  Implémentez la logique pour récupérer les réservations par statut.
+        log.info("Getting bookings by status: {}", status);
+        // Exemple (à adapter) :
+        // return bookingRepository.findByStatus(status)
+        //     .map(bookingMapper::toDto);
+        return null; // Remplacer par l'implémentation réelle
+    }
+
+    public Mono<BookingDTO> refuseBooking(UUID bookingId) {
+        // Implémentez la logique pour refuser une réservation (changer le statut, etc.).
+         log.info("Refusing booking: {}", bookingId);
+        return bookingRepository.findById(bookingId)
+           .switchIfEmpty(Mono.error(new IllegalArgumentException("Booking not found")))
+           .flatMap(booking -> {
+               if (booking.getStatus() != BookingStatus.PENDING) {
+                   return Mono.error(new IllegalStateException("Cannot refuse booking in status " + booking.getStatus()));
+               }
+               booking.setStatus(BookingStatus.CANCELLED);
+               return bookingRepository.save(booking).map(bookingMapper::toDto);
+           })
+           .doOnSuccess(confirmedBooking -> log.info("Booking refused with id {}", bookingId));
+    }
+
+    public Mono<BookingDTO> extendBooking(UUID bookingId, LocalDateTime newEndDate) {
+        // Implémentez la logique pour prolonger une réservation.
+         log.info("Extending booking: {} to {}", bookingId, newEndDate);
+
+         return bookingRepository.findById(bookingId)
+           .switchIfEmpty(Mono.error(new IllegalArgumentException("Booking not found")))
+           .flatMap(booking -> {
+                if (booking.getStatus() != BookingStatus.CONFIRMED) {
+                   return Mono.error(new IllegalStateException("Cannot extend booking in status " + booking.getStatus()));
+               }
+                if(newEndDate.isBefore(booking.getEndDate())){
+                    return Mono.error(new IllegalArgumentException("La nouvelle date de fin ne doit pas être antérieure à l'actuelle"));
+                }
+                booking.setEndDate(newEndDate);
+               return bookingRepository.save(booking).map(bookingMapper::toDto);
+           })
+           .doOnSuccess(confirmedBooking -> log.info("Booking extended with id {}", bookingId));
     }
 }
