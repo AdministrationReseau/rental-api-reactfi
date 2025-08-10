@@ -1,4 +1,4 @@
-package inc.yowyob.rental_api_reactive.infrastructure.web;
+package inc.yowyob.rental_api_reactive.infrastructure.web.dto.booking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

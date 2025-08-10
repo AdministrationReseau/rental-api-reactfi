@@ -1,10 +1,10 @@
 package inc.yowyob.rental_api_reactive.infrastructure.web.controller.booking;
 
 import inc.yowyob.rental_api_reactive.application.service.booking.BookingReactiveService;
-import inc.yowyob.rental_api_reactive.infrastructure.web.BookingResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.CreateBookingRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.ApiResponse;
-import inc.yowyob.rental_api_reactive.persistence.mapper.BookingResponseMapper;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.booking.BookingResponse;
+import inc.yowyob.rental_api_reactive.persistence.mapper.booking.BookingResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
