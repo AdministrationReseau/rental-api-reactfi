@@ -6,7 +6,7 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.AgencyRedire
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.PersonnelResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.CreatePersonnelRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UpdatePersonnelRequest;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

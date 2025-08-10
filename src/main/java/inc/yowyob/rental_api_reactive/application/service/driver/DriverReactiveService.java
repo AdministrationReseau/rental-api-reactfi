@@ -7,8 +7,8 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.driver.ChangeDriver
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.driver.CreateDriverRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.driver.DriverResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.driver.UpdateDriverRequest;
-import inc.yowyob.rental_api_reactive.persistence.entity.Driver;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.driver.Driver;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import inc.yowyob.rental_api_reactive.persistence.mapper.driver.DriverMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.driver.DriverReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;

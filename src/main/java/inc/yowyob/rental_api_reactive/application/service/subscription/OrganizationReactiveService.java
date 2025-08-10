@@ -9,7 +9,7 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.Organi
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.OrganizationStatisticsResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.UpdateOrganizationRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.UpdateSubscriptionRequest;
-import inc.yowyob.rental_api_reactive.persistence.entity.Organization;
+import inc.yowyob.rental_api_reactive.persistence.entity.organization.Organization;
 import inc.yowyob.rental_api_reactive.persistence.mapper.organization.OrganizationMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.agency.AgencyReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.organization.OrganizationReactiveRepository;

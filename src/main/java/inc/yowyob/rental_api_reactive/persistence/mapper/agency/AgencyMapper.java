@@ -8,7 +8,8 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.AgencyRespon
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.CreateAgencyRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.UpdateAgencyRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.util.WorkingHoursInfo;
-import inc.yowyob.rental_api_reactive.persistence.entity.Agency;
+import inc.yowyob.rental_api_reactive.persistence.entity.agency.Agency;
+
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

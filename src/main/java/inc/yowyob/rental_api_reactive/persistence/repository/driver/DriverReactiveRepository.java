@@ -7,7 +7,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
 import inc.yowyob.rental_api_reactive.application.dto.driver.DriverStatus;
-import inc.yowyob.rental_api_reactive.persistence.entity.Driver;
+import inc.yowyob.rental_api_reactive.persistence.entity.driver.Driver;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -1,4 +1,4 @@
-package inc.yowyob.rental_api_reactive.persistence.entity;
+package inc.yowyob.rental_api_reactive.persistence.entity.vehicle;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import inc.yowyob.rental_api_reactive.application.dto.vehicle.FuelType;

@@ -1,6 +1,6 @@
 package inc.yowyob.rental_api_reactive.application.service.user;
 
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;
 // import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UpdateProfileRequest;

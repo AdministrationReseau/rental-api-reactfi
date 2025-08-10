@@ -4,8 +4,8 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.Subscr
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.SubscriptionLimitsResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.SubscriptionValidationResult;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.util.ResourceLimitInfo;
-import inc.yowyob.rental_api_reactive.persistence.entity.Organization;
 import inc.yowyob.rental_api_reactive.persistence.entity.SubscriptionPlan;
+import inc.yowyob.rental_api_reactive.persistence.entity.organization.Organization;
 import inc.yowyob.rental_api_reactive.persistence.repository.agency.AgencyReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.organization.OrganizationReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.subscription.SubscriptionPlanReactiveRepository;

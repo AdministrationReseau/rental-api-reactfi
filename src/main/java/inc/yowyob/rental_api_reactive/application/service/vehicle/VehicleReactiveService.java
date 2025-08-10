@@ -11,6 +11,10 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleImag
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleSearchRequest;
 import inc.yowyob.rental_api_reactive.persistence.entity.*;
+import inc.yowyob.rental_api_reactive.persistence.entity.agency.Agency;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.Vehicle;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.VehicleBrand;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.VehicleImage;
 import inc.yowyob.rental_api_reactive.persistence.mapper.vehicle.VehicleMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.agency.AgencyReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.organization.OrganizationReactiveRepository;

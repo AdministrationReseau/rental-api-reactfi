@@ -1,7 +1,9 @@
 package inc.yowyob.rental_api_reactive.infrastructure.security.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import lombok.AllArgsConstructor;

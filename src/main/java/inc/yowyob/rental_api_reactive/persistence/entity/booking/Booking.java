@@ -1,4 +1,4 @@
-package inc.yowyob.rental_api_reactive.persistence.entity;
+package inc.yowyob.rental_api_reactive.persistence.entity.booking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

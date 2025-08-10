@@ -1,10 +1,11 @@
 package inc.yowyob.rental_api_reactive.persistence.mapper.vehicle;
 
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+// import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.CreateVehicleBrandRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.UpdateVehicleBrandRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleBrandResponse;
-import inc.yowyob.rental_api_reactive.persistence.entity.VehicleBrand;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.VehicleBrand;
+
 import org.springframework.stereotype.Component;
 
 /**

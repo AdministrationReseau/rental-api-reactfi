@@ -1,9 +1,10 @@
 package inc.yowyob.rental_api_reactive.persistence.repository.agency;
 
-import inc.yowyob.rental_api_reactive.persistence.entity.Agency;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.stereotype.Repository;
+
+import inc.yowyob.rental_api_reactive.persistence.entity.agency.Agency;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

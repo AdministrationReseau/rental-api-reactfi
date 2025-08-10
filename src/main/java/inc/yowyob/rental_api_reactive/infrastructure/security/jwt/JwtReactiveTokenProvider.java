@@ -2,7 +2,7 @@ package inc.yowyob.rental_api_reactive.infrastructure.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import inc.yowyob.rental_api_reactive.infrastructure.config.AppProperties;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;

@@ -8,7 +8,7 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.AgencyStatis
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.AgencyStatisticsResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.CreateAgencyRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.UpdateAgencyRequest;
-import inc.yowyob.rental_api_reactive.persistence.entity.Agency;
+import inc.yowyob.rental_api_reactive.persistence.entity.agency.Agency;
 // import inc.yowyob.rental_api_reactive.persistence.entity.Organization;
 import inc.yowyob.rental_api_reactive.persistence.mapper.agency.AgencyMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.agency.AgencyReactiveRepository;

@@ -1,7 +1,7 @@
 package inc.yowyob.rental_api_reactive.persistence.repository.user;
 
 import inc.yowyob.rental_api_reactive.application.dto.user.UserType;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;

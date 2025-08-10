@@ -1,7 +1,8 @@
 package inc.yowyob.rental_api_reactive.persistence.mapper.user;
 
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserRoleResponse;
-import inc.yowyob.rental_api_reactive.persistence.entity.UserRole;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.UserRole;
+
 import org.springframework.stereotype.Component;
 
 @Component

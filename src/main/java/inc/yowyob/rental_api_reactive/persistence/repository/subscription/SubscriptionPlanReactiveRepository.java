@@ -1,11 +1,12 @@
 package inc.yowyob.rental_api_reactive.persistence.repository.subscription;
 
-import inc.yowyob.rental_api_reactive.persistence.entity.SubscriptionPlan;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.stereotype.Repository;
+
+import inc.yowyob.rental_api_reactive.persistence.entity.SubscriptionPlan;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+// import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 

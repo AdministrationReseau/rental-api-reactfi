@@ -4,7 +4,7 @@ import inc.yowyob.rental_api_reactive.application.dto.user.UserType;
 import inc.yowyob.rental_api_reactive.application.service.auth.AuthorizationReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.SecurityContext;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.TenantFilter;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.agency.AgencyReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.organization.OrganizationReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;

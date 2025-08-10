@@ -1,8 +1,9 @@
-package inc.yowyob.rental_api_reactive.persistence.entity;
+package inc.yowyob.rental_api_reactive.persistence.entity.organization;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import inc.yowyob.rental_api_reactive.application.dto.organization.OrganizationType;
+import inc.yowyob.rental_api_reactive.persistence.entity.BaseEntity;
 import lombok.*;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;

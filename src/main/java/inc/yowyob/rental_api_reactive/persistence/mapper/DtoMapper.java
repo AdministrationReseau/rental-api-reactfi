@@ -1,6 +1,6 @@
 package inc.yowyob.rental_api_reactive.persistence.mapper;
 
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+// import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.agency.AgencyStatisticsResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.SecurityContext;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.TenantFilter;
@@ -19,7 +19,7 @@ public class DtoMapper {
     /**
      * Convertit les informations de sécurité utilisateur en contexte de sécurité
      */
-    public SecurityContext toSecurityContext(inc.yowyob.rental_api_reactive.persistence.entity.User user) {
+    public SecurityContext toSecurityContext(inc.yowyob.rental_api_reactive.persistence.entity.user.User user) {
         if (user == null) return null;
 
         return SecurityContext.builder()
@@ -37,7 +37,7 @@ public class DtoMapper {
     /**
      * Convertit un filtre tenant
      */
-    public TenantFilter toTenantFilter(inc.yowyob.rental_api_reactive.persistence.entity.User user) {
+    public TenantFilter toTenantFilter(inc.yowyob.rental_api_reactive.persistence.entity.user.User user) {
         if (user == null) return null;
 
         TenantFilter.TenantFilterBuilder builder = TenantFilter.builder()
@@ -65,7 +65,7 @@ public class DtoMapper {
     /**
      * Convertit les statistiques d'agence
      */
-    public AgencyStatisticsResponse toAgencyStatisticsResponse(inc.yowyob.rental_api_reactive.persistence.entity.Agency agency) {
+    public AgencyStatisticsResponse toAgencyStatisticsResponse(inc.yowyob.rental_api_reactive.persistence.entity.agency.Agency agency) {
         if (agency == null) return null;
 
         return AgencyStatisticsResponse.builder()
@@ -87,7 +87,7 @@ public class DtoMapper {
      * Convertit les limites d'abonnement
      */
     public SubscriptionLimitsResponse toSubscriptionLimitsResponse(
-        inc.yowyob.rental_api_reactive.persistence.entity.Organization organization,
+        inc.yowyob.rental_api_reactive.persistence.entity.organization.Organization organization,
         int activeAgencies) {
 
         if (organization == null) return null;
@@ -127,7 +127,7 @@ public class DtoMapper {
      * Convertit les statistiques d'organisation
      */
     public OrganizationStatisticsResponse toOrganizationStatisticsResponse(
-        inc.yowyob.rental_api_reactive.persistence.entity.Organization organization,
+        inc.yowyob.rental_api_reactive.persistence.entity.organization.Organization organization,
         int totalAgencies,
         int activeAgencies) {
 

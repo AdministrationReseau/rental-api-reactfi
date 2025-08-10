@@ -1,11 +1,12 @@
 package inc.yowyob.rental_api_reactive.persistence.repository.booking;
 
-import inc.yowyob.rental_api_reactive.persistence.entity.Booking;
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.stereotype.Repository;
+
+import inc.yowyob.rental_api_reactive.persistence.entity.booking.Booking;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
+// import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 

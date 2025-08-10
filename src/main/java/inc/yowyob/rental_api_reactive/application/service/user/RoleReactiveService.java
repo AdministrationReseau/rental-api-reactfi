@@ -8,7 +8,7 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.RolePerm
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.CreateRoleRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.RoleResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.UpdateRoleRequest;
-import inc.yowyob.rental_api_reactive.persistence.entity.Role;
+import inc.yowyob.rental_api_reactive.persistence.entity.role.Role;
 import inc.yowyob.rental_api_reactive.persistence.mapper.user.RoleMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.RoleReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserRoleReactiveRepository;

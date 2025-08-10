@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 
 import inc.yowyob.rental_api_reactive.application.dto.booking.BookingDTO;
 import inc.yowyob.rental_api_reactive.application.dto.util.Money;
-import inc.yowyob.rental_api_reactive.persistence.entity.Booking;
+import inc.yowyob.rental_api_reactive.persistence.entity.booking.Booking;
 
 import java.math.BigDecimal;
 

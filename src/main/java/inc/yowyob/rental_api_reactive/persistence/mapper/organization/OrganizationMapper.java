@@ -8,7 +8,8 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.Organi
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.OrganizationResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.OrganizationSettings;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.UpdateOrganizationRequest;
-import inc.yowyob.rental_api_reactive.persistence.entity.Organization;
+import inc.yowyob.rental_api_reactive.persistence.entity.organization.Organization;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

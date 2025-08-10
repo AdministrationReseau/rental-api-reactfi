@@ -4,7 +4,7 @@ package inc.yowyob.rental_api_reactive.application.service.vehicle;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.CreateVehicleBrandRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.UpdateVehicleBrandRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleBrandResponse;
-import inc.yowyob.rental_api_reactive.persistence.entity.VehicleBrand;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.VehicleBrand;
 import inc.yowyob.rental_api_reactive.persistence.mapper.vehicle.VehicleBrandMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.vehicle.VehicleBrandReactiveRepository;
 import lombok.RequiredArgsConstructor;

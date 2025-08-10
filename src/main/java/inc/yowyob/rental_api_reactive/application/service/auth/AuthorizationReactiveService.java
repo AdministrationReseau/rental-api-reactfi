@@ -3,7 +3,7 @@ package inc.yowyob.rental_api_reactive.application.service.auth;
 import inc.yowyob.rental_api_reactive.application.dto.user.RoleType;
 import inc.yowyob.rental_api_reactive.application.service.user.PermissionReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.SecurityContext;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.RoleReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserRoleReactiveRepository;
 import lombok.RequiredArgsConstructor;

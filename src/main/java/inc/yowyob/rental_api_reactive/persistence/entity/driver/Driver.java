@@ -1,4 +1,4 @@
-package inc.yowyob.rental_api_reactive.persistence.entity;
+package inc.yowyob.rental_api_reactive.persistence.entity.driver;
 
 import inc.yowyob.rental_api_reactive.application.dto.driver.DriverStatus;
 import inc.yowyob.rental_api_reactive.application.dto.util.Money;

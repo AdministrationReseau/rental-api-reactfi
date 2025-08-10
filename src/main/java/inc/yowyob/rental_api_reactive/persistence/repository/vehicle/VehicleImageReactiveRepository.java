@@ -1,7 +1,7 @@
 package inc.yowyob.rental_api_reactive.persistence.repository.vehicle;
 
 import inc.yowyob.rental_api_reactive.application.dto.util.ImageType;
-import inc.yowyob.rental_api_reactive.persistence.entity.VehicleImage;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.VehicleImage;
 
 import org.springframework.data.cassandra.repository.Query;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;

@@ -5,7 +5,7 @@ import inc.yowyob.rental_api_reactive.application.service.organization.MultiTena
 // import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.UpdateVehicleImageRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleImageResponse;
-import inc.yowyob.rental_api_reactive.persistence.entity.VehicleImage;
+import inc.yowyob.rental_api_reactive.persistence.entity.vehicle.VehicleImage;
 import inc.yowyob.rental_api_reactive.persistence.mapper.vehicle.VehicleImageMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.vehicle.VehicleImageReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.vehicle.VehicleReactiveRepository;

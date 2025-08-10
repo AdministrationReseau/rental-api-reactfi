@@ -14,7 +14,7 @@ import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.RefreshTokenRe
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.RegisterRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.ResetPasswordRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserResponse;
-import inc.yowyob.rental_api_reactive.persistence.entity.User;
+import inc.yowyob.rental_api_reactive.persistence.entity.user.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
