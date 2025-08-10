@@ -1,6 +1,8 @@
 package inc.yowyob.rental_api_reactive.application.service.user;
 
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+// import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.AssignRoleRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserRoleResponse;
 import inc.yowyob.rental_api_reactive.persistence.entity.UserRole;
 import inc.yowyob.rental_api_reactive.persistence.mapper.user.UserRoleMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.RoleReactiveRepository;

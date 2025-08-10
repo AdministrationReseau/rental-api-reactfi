@@ -2,14 +2,18 @@ package inc.yowyob.rental_api_reactive.application.service.user;
 
 import inc.yowyob.rental_api_reactive.persistence.entity.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserReactiveRepository;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+// import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UpdateProfileRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserPreferencesRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserStatsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 import java.util.UUID;
 
 /**

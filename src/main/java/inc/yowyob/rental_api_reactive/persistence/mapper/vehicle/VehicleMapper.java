@@ -1,6 +1,9 @@
 package inc.yowyob.rental_api_reactive.persistence.mapper.vehicle;
 
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.CreateVehicleRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.UpdateVehicleRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleResponse;
 import inc.yowyob.rental_api_reactive.persistence.entity.Vehicle;
 import org.springframework.stereotype.Component;
 

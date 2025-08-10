@@ -1,9 +1,10 @@
 package inc.yowyob.rental_api_reactive.application.service.user;
 
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.UserPermissionsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserPermissionsResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.UUID;

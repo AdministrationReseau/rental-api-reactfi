@@ -2,8 +2,8 @@ package inc.yowyob.rental_api_reactive.application.service.organization;
 
 import inc.yowyob.rental_api_reactive.application.dto.user.UserType;
 import inc.yowyob.rental_api_reactive.application.service.auth.AuthorizationReactiveService;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.SecurityContext;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.TenantFilter;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.SecurityContext;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.TenantFilter;
 import inc.yowyob.rental_api_reactive.persistence.entity.User;
 import inc.yowyob.rental_api_reactive.persistence.repository.agency.AgencyReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.organization.OrganizationReactiveRepository;
@@ -25,7 +25,7 @@ public class MultiTenantReactiveService {
 
     private final UserReactiveRepository userRepository;
     private final AgencyReactiveRepository agencyRepository;
-    private final OrganizationReactiveRepository organizationRepository;
+    // private final OrganizationReactiveRepository organizationRepository;
     private final AuthorizationReactiveService authorizationService;
 
     /**

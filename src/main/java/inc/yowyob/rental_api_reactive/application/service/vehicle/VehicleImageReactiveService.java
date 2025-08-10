@@ -2,7 +2,9 @@ package inc.yowyob.rental_api_reactive.application.service.vehicle;
 
 import inc.yowyob.rental_api_reactive.application.dto.util.ImageType;
 import inc.yowyob.rental_api_reactive.application.service.organization.MultiTenantReactiveService;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+// import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.UpdateVehicleImageRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleImageResponse;
 import inc.yowyob.rental_api_reactive.persistence.entity.VehicleImage;
 import inc.yowyob.rental_api_reactive.persistence.mapper.vehicle.VehicleImageMapper;
 import inc.yowyob.rental_api_reactive.persistence.repository.vehicle.VehicleImageReactiveRepository;

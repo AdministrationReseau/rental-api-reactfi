@@ -2,6 +2,11 @@ package inc.yowyob.rental_api_reactive.infrastructure.web.controller.user;
 
 import inc.yowyob.rental_api_reactive.application.service.user.RoleReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.RolePermissionsResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.CloneRoleRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.CreateRoleRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.RoleResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.role.UpdateRoleRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

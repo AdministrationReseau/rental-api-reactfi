@@ -2,6 +2,14 @@ package inc.yowyob.rental_api_reactive.infrastructure.web.controller.auth;
 
 import inc.yowyob.rental_api_reactive.application.service.auth.AuthReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.AuthResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.ChangePasswordRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.ForgotPasswordRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.LoginRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.RefreshTokenRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.RegisterRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.auth.ResetPasswordRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -3,6 +3,8 @@ package inc.yowyob.rental_api_reactive.infrastructure.web.controller.vehicle;
 import inc.yowyob.rental_api_reactive.application.service.vehicle.VehicleImageReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.security.UserPrincipal;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.UpdateVehicleImageRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.vehicle.VehicleImageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

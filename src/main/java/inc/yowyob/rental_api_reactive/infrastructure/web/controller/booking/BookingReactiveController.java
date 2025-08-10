@@ -4,11 +4,14 @@ import inc.yowyob.rental_api_reactive.application.service.booking.BookingReactiv
 import inc.yowyob.rental_api_reactive.infrastructure.web.BookingResponse;
 import inc.yowyob.rental_api_reactive.infrastructure.web.CreateBookingRequest;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.ApiResponse;
+import inc.yowyob.rental_api_reactive.persistence.mapper.BookingResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +29,8 @@ import java.util.UUID;
 public class BookingReactiveController {
 
     private final BookingReactiveService bookingService;
+    @Autowired
+    private BookingResponseMapper bookingResponseMapper; // Injection du mapper
 
    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)

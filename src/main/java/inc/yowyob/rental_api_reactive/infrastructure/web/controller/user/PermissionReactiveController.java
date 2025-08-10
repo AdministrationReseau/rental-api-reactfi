@@ -2,6 +2,13 @@ package inc.yowyob.rental_api_reactive.infrastructure.web.controller.user;
 
 import inc.yowyob.rental_api_reactive.application.service.user.PermissionReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.CheckMultiplePermissionsRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.MultiplePermissionCheckResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.PermissionCheckResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.PermissionComparisonResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.PermissionResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.ResourcePermissionsResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserPermissionsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Set;
+// import java.util.Set;
 import java.util.UUID;
 
 @RestController

@@ -2,6 +2,11 @@ package inc.yowyob.rental_api_reactive.infrastructure.web.controller.subscriptio
 
 import inc.yowyob.rental_api_reactive.application.service.subscription.OnboardingReactiveService;
 import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.OnboardingCompletionResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.OnboardingOrganizationRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.OnboardingOwnerRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.OnboardingResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.subscription.OnboardingSubscriptionRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

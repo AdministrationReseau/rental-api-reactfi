@@ -2,11 +2,12 @@ package inc.yowyob.rental_api_reactive.persistence.mapper.organization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.CreateOrganizationRequest;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.OrganizationPolicies;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.OrganizationResponse;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.OrganizationSettings;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.UpdateOrganizationRequest;
+
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.CreateOrganizationRequest;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.OrganizationPolicies;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.OrganizationResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.OrganizationSettings;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.organization.UpdateOrganizationRequest;
 import inc.yowyob.rental_api_reactive.persistence.entity.Organization;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

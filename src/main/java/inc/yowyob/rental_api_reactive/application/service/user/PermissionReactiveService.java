@@ -1,7 +1,12 @@
 package inc.yowyob.rental_api_reactive.application.service.user;
 
 import inc.yowyob.rental_api_reactive.application.dto.user.Permission;
-import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+// import inc.yowyob.rental_api_reactive.infrastructure.web.dto.*;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.PermissionComparisonResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.PermissionResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.ResourcePermissionsResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.permission.RolePermissionsResponse;
+import inc.yowyob.rental_api_reactive.infrastructure.web.dto.user.UserPermissionsResponse;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.RoleReactiveRepository;
 import inc.yowyob.rental_api_reactive.persistence.repository.user.UserRoleReactiveRepository;
 import lombok.RequiredArgsConstructor;
