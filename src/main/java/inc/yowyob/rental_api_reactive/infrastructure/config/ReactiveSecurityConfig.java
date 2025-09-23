@@ -38,9 +38,10 @@ public class ReactiveSecurityConfig {
         "/favicon.ico", // Important pour les requêtes de navigateur
         "/actuator/**",
         "/health",
-        "/api/v1/auth/**",
-        "/api/v1/onboarding/**",
-        "/api/v1/subscription/plans/**"
+        "/api/v1/**"
+        // "/api/v1/auth/**",
+        // "/api/v1/onboarding/**",
+        // "/api/v1/subscription/plans/**"
     };
 
     @Bean
